@@ -1,0 +1,639 @@
+<title>믿을구석 시안</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;900&family=Hahmlet:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+
+<style>
+  /* ============ 페이지 껍데기 (테마 반응) ============ */
+  :root {
+    --pg-ground: #F4F5F6;
+    --pg-surface: #FFFFFF;
+    --pg-ink: #16191C;
+    --pg-soft: #414A50;
+    --pg-muted: #6A757C;
+    --pg-line: #DBE0E2;
+    --pg-accent: #185E6E;
+    --pg-accent-soft: #E3EEF1;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --pg-ground: #101416;
+      --pg-surface: #171D20;
+      --pg-ink: #E3E9EB;
+      --pg-soft: #BCC7CB;
+      --pg-muted: #879499;
+      --pg-line: #283134;
+      --pg-accent: #5FB6C9;
+      --pg-accent-soft: #122C33;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --pg-ground: #101416;
+    --pg-surface: #171D20;
+    --pg-ink: #E3E9EB;
+    --pg-soft: #BCC7CB;
+    --pg-muted: #879499;
+    --pg-line: #283134;
+    --pg-accent: #5FB6C9;
+    --pg-accent-soft: #122C33;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--pg-ground);
+    color: var(--pg-ink);
+    font-family: "IBM Plex Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+    font-weight: 300;
+    font-size: 16.5px;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0 24px 120px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 50rem; margin: 0 auto; }
+
+  header.mast {
+    padding: 80px 0 36px;
+    border-bottom: 2px solid var(--pg-ink);
+    display: flex; flex-direction: column; gap: 18px;
+  }
+
+  .kick {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--pg-muted);
+  }
+
+  h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-weight: 700; font-size: clamp(34px, 6.5vw, 48px);
+    line-height: 1.15; letter-spacing: -0.02em; margin: 0; text-wrap: balance;
+  }
+
+  .lede { font-size: 18px; line-height: 1.75; color: var(--pg-soft); margin: 0; max-width: 34rem; }
+
+  .howto {
+    margin-top: 36px; padding: 20px 22px;
+    border-left: 3px solid var(--pg-accent); background: var(--pg-accent-soft);
+    display: flex; flex-direction: column; gap: 10px; border-radius: 0 2px 2px 0;
+  }
+  .howto p { margin: 0; font-size: 15.5px; line-height: 1.75; color: var(--pg-soft); }
+  .howto b { color: var(--pg-ink); font-weight: 600; }
+
+  .dir { padding: 64px 0 0; display: flex; flex-direction: column; gap: 22px; }
+
+  .dir-head { display: flex; flex-direction: column; gap: 10px; }
+
+  .dir-tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--pg-accent);
+  }
+
+  h2 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-weight: 700; font-size: 27px; line-height: 1.35; margin: 0; letter-spacing: -0.01em;
+  }
+
+  .dir-why { font-size: 16px; line-height: 1.8; color: var(--pg-soft); margin: 0; }
+
+  .spec {
+    display: flex; flex-direction: column; gap: 8px;
+    border-top: 1px solid var(--pg-line); border-bottom: 1px solid var(--pg-line);
+    padding: 14px 0; font-size: 14.5px;
+  }
+  .spec-row { display: grid; grid-template-columns: 5.5rem 1fr; gap: 4px 14px; align-items: baseline; }
+  .spec-k {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--pg-muted);
+  }
+  .spec-v { color: var(--pg-soft); line-height: 1.65; }
+
+  .frame-label {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--pg-muted);
+    margin: 6px 0 -10px;
+  }
+
+  .frame { border-radius: 3px; overflow: hidden; border: 1px solid var(--pg-line); }
+
+  footer {
+    margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--pg-line);
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; line-height: 1.9; color: var(--pg-muted);
+  }
+
+  .close { padding: 64px 0 0; display: flex; flex-direction: column; gap: 20px; }
+  .close ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 12px; }
+  .close li { color: var(--pg-soft); }
+  .close li b { color: var(--pg-ink); font-weight: 600; }
+
+  /* ============================================================
+     시안 A — 계약 문서
+     ============================================================ */
+  .a {
+    --ink: #1B1E1A; --soft: #454B44; --mute: #6E766B;
+    --paper: #F1F2ED; --rule: #C7CBBE; --hair: #DDE0D6;
+    --sev-hi: #8C2E22; --sev-mid: #8A6A1F; --sev-lo: #6B7268;
+    background: var(--paper); color: var(--ink);
+    font-family: "IBM Plex Sans KR", sans-serif; font-weight: 400;
+    padding: 34px 30px 30px;
+  }
+  .a-top { border-bottom: 2px solid var(--ink); padding-bottom: 18px; margin-bottom: 24px; }
+  .a-eyebrow {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--mute); margin: 0 0 8px;
+  }
+  .a-title {
+    font-family: "Hahmlet", serif; font-weight: 800; font-size: 28px;
+    line-height: 1.3; margin: 0; letter-spacing: -0.01em;
+  }
+  .a-money { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 24px; }
+  .a-money > div { padding: 16px 20px 16px 0; }
+  .a-money > div + div { border-left: 1px solid var(--rule); padding-left: 24px; }
+  .a-mk { font-size: 12.5px; color: var(--mute); margin: 0 0 6px; letter-spacing: 0.02em; }
+  .a-mv {
+    font-family: "Hahmlet", serif; font-weight: 600; font-size: 23px; line-height: 1.3;
+    margin: 0; font-variant-numeric: tabular-nums;
+  }
+  .a-mv.hot { color: var(--sev-hi); }
+  .a-mn { font-size: 12px; color: var(--mute); margin: 6px 0 0; }
+
+  .a-verdict {
+    border: 1px solid var(--sev-hi); border-left-width: 4px;
+    padding: 14px 18px; margin-bottom: 26px; display: flex; gap: 16px; align-items: baseline;
+  }
+  .a-vlabel {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--mute);
+  }
+  .a-vword { font-family: "Hahmlet", serif; font-weight: 800; font-size: 20px; color: var(--sev-hi); }
+  .a-vtext { font-size: 14px; line-height: 1.7; color: var(--soft); margin: 0; }
+
+  .a-sechead {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--ink); padding-bottom: 8px; margin-bottom: 0;
+  }
+  .a-sechead h4 { font-family: "Hahmlet", serif; font-weight: 600; font-size: 17px; margin: 0; }
+  .a-sechead span { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--mute); letter-spacing: 0.08em; }
+
+  .a-item { display: grid; grid-template-columns: 2rem 1fr; gap: 0 14px; padding: 16px 0; border-bottom: 1px solid var(--hair); }
+  .a-num {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--mute);
+    padding-top: 3px; font-variant-numeric: tabular-nums;
+  }
+  .a-body { display: flex; flex-direction: column; gap: 6px; }
+  .a-meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; font-size: 11.5px; }
+  .a-sev {
+    font-family: "IBM Plex Mono", monospace; letter-spacing: 0.1em; text-transform: uppercase;
+    border-bottom: 2px solid currentColor; padding-bottom: 1px;
+  }
+  .a-sev.hi { color: var(--sev-hi); }
+  .a-sev.mid { color: var(--sev-mid); }
+  .a-slot { color: var(--mute); font-family: "IBM Plex Mono", monospace; letter-spacing: 0.06em; }
+  .a-hours { margin-left: auto; font-family: "IBM Plex Mono", monospace; color: var(--soft); font-variant-numeric: tabular-nums; }
+  .a-name { font-family: "Hahmlet", serif; font-weight: 600; font-size: 16.5px; line-height: 1.5; margin: 0; }
+  .a-desc { font-size: 13.5px; line-height: 1.7; color: var(--soft); margin: 0; }
+  .a-contract { font-size: 12.5px; color: var(--mute); margin: 2px 0 0; }
+  .a-contract b { color: var(--sev-hi); font-weight: 600; }
+
+  /* ============================================================
+     시안 B — 판정 계기판
+     ============================================================ */
+  .b {
+    --bg: #11141C; --card: #191E2A; --edge: #262D3D;
+    --ink: #E9ECF4; --soft: #AEB6C9; --mute: #78819A;
+    --amber: #F2A83E; --hot: #FF6D5C; --calm: #56C7B0;
+    background: var(--bg); color: var(--ink);
+    font-family: "Gothic A1", "IBM Plex Sans KR", sans-serif; font-weight: 400;
+    padding: 30px 26px 26px;
+  }
+  .b-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 22px; }
+  .b-title { font-family: "Gothic A1", sans-serif; font-weight: 900; font-size: 22px; line-height: 1.35; margin: 0; letter-spacing: -0.02em; }
+  .b-chip {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--bg); background: var(--hot); padding: 5px 11px; border-radius: 2px; font-weight: 600; white-space: nowrap;
+  }
+  .b-hero {
+    background: var(--card); border: 1px solid var(--edge); border-radius: 3px;
+    padding: 20px 22px; margin-bottom: 14px;
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: center;
+  }
+  .b-hk { font-size: 12px; color: var(--mute); margin: 0 0 8px; letter-spacing: 0.02em; }
+  .b-hv {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 20px;
+    margin: 0; font-variant-numeric: tabular-nums; line-height: 1.25;
+  }
+  .b-hv.big { font-size: 25px; color: var(--amber); }
+  .b-arrow { color: var(--mute); font-size: 20px; }
+  .b-hn { font-size: 11.5px; color: var(--mute); margin: 7px 0 0; font-family: "IBM Plex Mono", monospace; }
+
+  .b-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 22px; }
+  .b-stat { background: var(--card); border: 1px solid var(--edge); border-radius: 3px; padding: 12px 14px; }
+  .b-sn {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 21px;
+    margin: 0; font-variant-numeric: tabular-nums; line-height: 1.2;
+  }
+  .b-sn.hot { color: var(--hot); }
+  .b-sl { font-size: 11.5px; color: var(--mute); margin: 5px 0 0; line-height: 1.45; }
+
+  .b-sechead { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+  .b-sechead h4 { font-family: "Gothic A1", sans-serif; font-weight: 700; font-size: 15px; margin: 0; letter-spacing: -0.01em; }
+  .b-sechead span { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--mute); letter-spacing: 0.08em; }
+
+  .b-rows { display: flex; flex-direction: column; gap: 8px; }
+  .b-row {
+    background: var(--card); border: 1px solid var(--edge); border-left: 3px solid var(--mute);
+    border-radius: 0 3px 3px 0; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .b-row.hi { border-left-color: var(--hot); }
+  .b-row.mid { border-left-color: var(--amber); }
+  .b-rmeta { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; font-size: 11px; font-family: "IBM Plex Mono", monospace; letter-spacing: 0.08em; }
+  .b-badge { text-transform: uppercase; padding: 2px 7px; border-radius: 2px; font-weight: 600; }
+  .b-badge.hi { background: rgba(255,109,92,0.16); color: var(--hot); }
+  .b-badge.mid { background: rgba(242,168,62,0.16); color: var(--amber); }
+  .b-slot { color: var(--mute); }
+  .b-hrs { margin-left: auto; color: var(--soft); font-variant-numeric: tabular-nums; }
+  .b-rname { font-family: "Gothic A1", sans-serif; font-weight: 700; font-size: 15.5px; line-height: 1.5; margin: 0; letter-spacing: -0.01em; }
+  .b-rdesc { font-size: 13px; line-height: 1.7; color: var(--soft); margin: 0; }
+
+  /* ============================================================
+     시안 C — 작업 체크리스트
+     ============================================================ */
+  .c {
+    --paper: #FFFFFF; --ink: #191A18; --soft: #4C514C; --mute: #858B84;
+    --hair: #E6E4DE; --green: #1D6B58; --hot: #B23A2B; --mid: #966A16;
+    background: var(--paper); color: var(--ink);
+    font-family: "IBM Plex Sans KR", sans-serif; font-weight: 400;
+    padding: 28px 26px 24px; line-height: 1.65;
+  }
+  .c-top { display: flex; flex-direction: column; gap: 4px; margin-bottom: 18px; }
+  .c-kick { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); }
+  .c-title { font-weight: 600; font-size: 19px; margin: 0; letter-spacing: -0.01em; }
+
+  .c-bar {
+    display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--hair);
+    border-radius: 2px; overflow: hidden; margin-bottom: 8px;
+  }
+  .c-cell { flex: 1 1 0; min-width: 110px; padding: 12px 14px; }
+  .c-cell + .c-cell { border-left: 1px solid var(--hair); }
+  .c-ck { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute); margin: 0 0 5px; }
+  .c-cv { font-weight: 600; font-size: 16px; margin: 0; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .c-cv.hot { color: var(--hot); }
+  .c-note { font-size: 11.5px; color: var(--mute); margin: 0 0 18px; font-family: "IBM Plex Mono", monospace; }
+
+  .c-verdict {
+    display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
+    border-left: 3px solid var(--hot); padding: 10px 0 10px 14px; margin-bottom: 20px;
+  }
+  .c-vw { font-weight: 700; font-size: 15px; color: var(--hot); }
+  .c-vt { font-size: 13.5px; color: var(--soft); margin: 0; line-height: 1.65; }
+
+  .c-listhead {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--mute);
+    border-bottom: 1px solid var(--ink); padding-bottom: 7px;
+  }
+  .c-line { display: grid; grid-template-columns: 1.3rem 1fr auto; gap: 0 12px; padding: 11px 0; border-bottom: 1px solid var(--hair); align-items: start; }
+  .c-mark {
+    width: 13px; height: 13px; border: 1.5px solid var(--mute); border-radius: 2px;
+    margin-top: 5px;
+  }
+  .c-mark.hi { border-color: var(--hot); background: var(--hot); }
+  .c-mark.mid { border-color: var(--mid); }
+  .c-main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .c-ln { font-weight: 500; font-size: 15px; line-height: 1.55; margin: 0; }
+  .c-ld { font-size: 13px; color: var(--soft); margin: 0; line-height: 1.65; }
+  .c-lm { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--mute); letter-spacing: 0.06em; margin: 2px 0 0; }
+  .c-lm b { color: var(--hot); font-weight: 600; }
+  .c-hrs {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--soft);
+    white-space: nowrap; padding-top: 3px; font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 640px) {
+    body { font-size: 15.5px; padding: 0 16px 80px; }
+    header.mast { padding-top: 52px; }
+    .spec-row, .a-money, .b-hero { grid-template-columns: 1fr; }
+    .a-money > div + div { border-left: 0; border-top: 1px solid var(--rule); padding-left: 0; }
+    .b-arrow { display: none; }
+    .b-stats { grid-template-columns: repeat(2, 1fr); }
+    .a-item { grid-template-columns: 1fr; }
+    .a-num { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="page">
+
+  <header class="mast">
+    <p class="kick">믿을구석 · 결과 화면 시안 · 2026-08-31</p>
+    <h1>같은 결과, 세 가지 방향</h1>
+    <p class="lede">지금 배포된 화면이 “아직 구려 보이는” 이유는 취향 문제가 아니라 <b>기준이 없어서</b>다. 방향을 먼저 고르면 이후 수정이 감이 아니라 규칙 적용이 된다.</p>
+  </header>
+
+  <div class="howto">
+    <p><b>보는 법.</b> 세 시안 모두 <b>똑같은 내용</b>을 그린다 — 반려동물 산책 앱 예시의 실제 결과다. 내용이 같으니 다른 것은 방향뿐이다.</p>
+    <p><b>고르는 법.</b> 예쁜 것을 고르는 게 아니라 <b>“이 화면을 누가 언제 보는가”</b>로 고른다. 심사위원이 30초 훑는 화면인가, 프리랜서가 견적서 쓰며 옆에 띄워두는 화면인가, 클라이언트에게 그대로 보내는 화면인가.</p>
+    <p>고른 뒤에는 그 방향의 <b>폰트·색·간격 규칙만</b> 화면 작업 중인 쪽에 넘기면 된다.</p>
+  </div>
+
+  <!-- ============ A ============ -->
+  <section class="dir">
+    <div class="dir-head">
+      <p class="dir-tag">방향 A</p>
+      <h2>계약 문서 — 그대로 클라이언트에게 보낼 수 있는 것</h2>
+      <p class="dir-why">이 도구의 결과는 결국 <b>협상 자료</b>다. 화면이 문서처럼 생기면 “AI가 뱉은 목록”이 아니라 “검토한 문서”로 읽히고, 캡처해서 클라이언트에게 보내도 무게가 실린다. 색을 거의 쓰지 않아 심각도 표시가 오히려 또렷해진다.</p>
+    </div>
+    <div class="spec">
+      <div class="spec-row"><span class="spec-k">폰트</span><span class="spec-v">제목 Hahmlet(한글 세리프) · 본문 IBM Plex Sans KR · 숫자 IBM Plex Mono</span></div>
+      <div class="spec-row"><span class="spec-k">색</span><span class="spec-v">종이 #F1F2ED · 먹 #1B1E1A · 심각 #8C2E22 · 주의 #8A6A1F — 액센트 없음이 컨셉</span></div>
+      <div class="spec-row"><span class="spec-k">유리한 때</span><span class="spec-v">신뢰가 중요할 때. 결과를 캡처해 남에게 보여줄 때. 심사에서 “진지한 제품”으로 읽히고 싶을 때</span></div>
+      <div class="spec-row"><span class="spec-k">약점</span><span class="spec-v">차분해서 첫인상이 밋밋할 수 있다. 모바일에서 세리프가 작아지면 읽기 부담</span></div>
+    </div>
+
+    <p class="frame-label">↓ 실제 렌더링</p>
+    <div class="frame">
+      <div class="a">
+        <div class="a-top">
+          <p class="a-eyebrow">누락 검토 결과 · 반려동물 산책 앱 스토어 등록</p>
+          <h3 class="a-title">요청문에 없는 작업 10건</h3>
+        </div>
+
+        <div class="a-money">
+          <div>
+            <p class="a-mk">클라이언트가 제시한 금액</p>
+            <p class="a-mv">600만 ~ 900만원</p>
+            <p class="a-mn">요청문에 적힌 것만 반영된 금액</p>
+          </div>
+          <div>
+            <p class="a-mk">안 적힌 일까지 넣으면</p>
+            <p class="a-mv hot">920만 ~ 1,760만원</p>
+            <p class="a-mn">추가 공수 64~220시간 (8.0~27.5일)</p>
+          </div>
+        </div>
+
+        <div class="a-verdict">
+          <span class="a-vlabel">최종 판정</span>
+          <span class="a-vword">위험</span>
+          <p class="a-vtext">반려 사유가 공개되지 않은 상태에서 신규 개발 가능성이 크고, 증액이 금지돼 있으며, 6개월 상시 대기가 정액에 포함돼 있다.</p>
+        </div>
+
+        <div class="a-sechead">
+          <h4>숨은 작업</h4>
+          <span>10건 중 심각 5 · 계약 범위 밖 3</span>
+        </div>
+
+        <div class="a-item">
+          <span class="a-num">01</span>
+          <div class="a-body">
+            <div class="a-meta">
+              <span class="a-sev hi">심각</span>
+              <span class="a-slot">S6 법적·행정 요건</span>
+              <span class="a-hours">20~40시간</span>
+            </div>
+            <p class="a-name">Apple 가이드라인 대응 — 신고·차단·필터링·연락처</p>
+            <p class="a-desc">이용자끼리 만나고 대화하는 앱은 이 4종이 없으면 반려된다. 2회 반려 사유가 이것일 가능성이 높다.</p>
+            <p class="a-contract">계약상 <b>제외</b> — 계약은 ‘신규 개발 없이 기존 코드 검토와 오류 수정만’이다.</p>
+          </div>
+        </div>
+
+        <div class="a-item">
+          <span class="a-num">02</span>
+          <div class="a-body">
+            <div class="a-meta">
+              <span class="a-sev hi">심각</span>
+              <span class="a-slot">S3 우리가 직접 하겠다는 것</span>
+              <span class="a-hours">2~80시간</span>
+            </div>
+            <p class="a-name">스토어 계정 소유권 확인 및 이관</p>
+            <p class="a-desc">이전 개발사가 등록했다면 계정이 그쪽 소유일 수 있고, 이미 이탈한 상태라 협조를 못 받으면 등록 자체가 진행되지 않는다.</p>
+            <p class="a-contract">계약상 <b>애매</b> — 통제 불가 리스크. 이관이 막히면 프로젝트가 정지한다.</p>
+          </div>
+        </div>
+
+        <div class="a-item">
+          <span class="a-num">03</span>
+          <div class="a-body">
+            <div class="a-meta">
+              <span class="a-sev hi">심각</span>
+              <span class="a-slot">S7 기다리는 시간</span>
+              <span class="a-hours">시간 환산 안 됨</span>
+            </div>
+            <p class="a-name">24시간 기준 장애 대응 = 6개월간 상시 대기</p>
+            <p class="a-desc">12시간 이내 복구를 약속하려면 주말·야간에도 연락받을 수 있어야 한다. 일한 시간이 아니라 묶여 있는 시간이므로 별도로 계상해야 한다.</p>
+            <p class="a-contract">계약상 <b>포함</b> — 월 3시간 한도에서 차감되지 않는 항목이라 사실상 무제한 대기.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ B ============ -->
+  <section class="dir">
+    <div class="dir-head">
+      <p class="dir-tag">방향 B</p>
+      <h2>판정 계기판 — 받을지 말지 30초 안에</h2>
+      <p class="dir-why">읽는 화면이 아니라 <b>판단하는 화면</b>으로 만든다. 금액 대비와 심각 건수를 큰 숫자로 앞세우고, 항목은 왼쪽 색 막대로 심각도를 먼저 보여준다. 어두운 바탕이라 숫자와 경고색이 강하게 튄다.</p>
+    </div>
+    <div class="spec">
+      <div class="spec-row"><span class="spec-k">폰트</span><span class="spec-v">제목 Gothic A1 900 · 본문 Gothic A1 · 숫자 IBM Plex Mono</span></div>
+      <div class="spec-row"><span class="spec-k">색</span><span class="spec-v">바탕 #11141C · 액센트 앰버 #F2A83E · 심각 #FF6D5C — 액센트와 경고색을 분리한 것이 핵심</span></div>
+      <div class="spec-row"><span class="spec-k">유리한 때</span><span class="spec-v">심사에서 강한 첫인상이 필요할 때. “도구답다”는 인상. 스크린샷 한 장으로 설명될 때</span></div>
+      <div class="spec-row"><span class="spec-k">약점</span><span class="spec-v">어두운 화면은 호불호가 갈린다. 긴 글을 읽기엔 피로하다. 캡처해서 클라이언트에게 보내기엔 과하다</span></div>
+    </div>
+
+    <p class="frame-label">↓ 실제 렌더링</p>
+    <div class="frame">
+      <div class="b">
+        <div class="b-top">
+          <h3 class="b-title">반려동물 산책 앱<br>스토어 등록 및 6개월 유지보수</h3>
+          <span class="b-chip">위험</span>
+        </div>
+
+        <div class="b-hero">
+          <div>
+            <p class="b-hk">클라이언트 제시</p>
+            <p class="b-hv">600만~900만원</p>
+            <p class="b-hn">적힌 것만 반영</p>
+          </div>
+          <div class="b-arrow">→</div>
+          <div>
+            <p class="b-hk">안 적힌 일까지 넣으면</p>
+            <p class="b-hv big">920만~1,760만원</p>
+            <p class="b-hn">+64~220시간 · 8.0~27.5일</p>
+          </div>
+        </div>
+
+        <div class="b-stats">
+          <div class="b-stat"><p class="b-sn">10</p><p class="b-sl">숨은 작업</p></div>
+          <div class="b-stat"><p class="b-sn hot">5</p><p class="b-sl">그중 심각</p></div>
+          <div class="b-stat"><p class="b-sn">3</p><p class="b-sl">계약 범위 밖</p></div>
+          <div class="b-stat"><p class="b-sn">2</p><p class="b-sl">시간 환산 불가</p></div>
+        </div>
+
+        <div class="b-sechead">
+          <h4>요청문에 없는 작업</h4>
+          <span>심각도 순</span>
+        </div>
+
+        <div class="b-rows">
+          <div class="b-row hi">
+            <div class="b-rmeta">
+              <span class="b-badge hi">심각</span>
+              <span class="b-slot">S6 법적·행정</span>
+              <span class="b-hrs">20~40h</span>
+            </div>
+            <p class="b-rname">Apple 가이드라인 대응 — 신고·차단·필터링·연락처</p>
+            <p class="b-rdesc">이용자끼리 만나는 앱은 이 4종이 없으면 반려된다. 계약은 ‘신규 개발 없이 오류 수정만’이라 범위 밖이다.</p>
+          </div>
+          <div class="b-row hi">
+            <div class="b-rmeta">
+              <span class="b-badge hi">심각</span>
+              <span class="b-slot">S3 직접 하겠다는 것</span>
+              <span class="b-hrs">2~80h</span>
+            </div>
+            <p class="b-rname">스토어 계정 소유권 확인 및 이관</p>
+            <p class="b-rdesc">이전 개발사 소유면 협조 없이는 등록이 진행되지 않는다. 이관이 막히면 프로젝트가 정지한다.</p>
+          </div>
+          <div class="b-row hi">
+            <div class="b-rmeta">
+              <span class="b-badge hi">심각</span>
+              <span class="b-slot">S7 기다리는 시간</span>
+              <span class="b-hrs">환산 불가</span>
+            </div>
+            <p class="b-rname">24시간 기준 장애 대응 = 6개월간 상시 대기</p>
+            <p class="b-rdesc">주말·야간에도 연락받을 수 있어야 한다. 일한 시간이 아니라 묶여 있는 시간이다.</p>
+          </div>
+          <div class="b-row mid">
+            <div class="b-rmeta">
+              <span class="b-badge mid">주의</span>
+              <span class="b-slot">S6 법적·행정</span>
+              <span class="b-hrs">4~8h</span>
+            </div>
+            <p class="b-rname">심사용 데모 계정 및 더미 데이터 세팅</p>
+            <p class="b-rdesc">매칭 서비스는 상대 이용자가 있어야 기능 확인이 되므로 더미 데이터를 따로 만들어야 한다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ C ============ -->
+  <section class="dir">
+    <div class="dir-head">
+      <p class="dir-tag">방향 C</p>
+      <h2>작업 체크리스트 — 옆에 띄워두고 견적서에 옮겨 담는 것</h2>
+      <p class="dir-why">프리랜서가 실제로 하는 행동은 <b>이 목록을 보며 견적서를 쓰는 것</b>이다. 그렇다면 화면은 감상용이 아니라 작업대여야 한다. 카드를 없애고 줄 단위로 촘촘히 놓아 한 화면에 더 많이 담고, 체크박스로 “처리했다”를 표시할 여지를 남긴다.</p>
+    </div>
+    <div class="spec">
+      <div class="spec-row"><span class="spec-k">폰트</span><span class="spec-v">전체 IBM Plex Sans KR · 라벨과 숫자 IBM Plex Mono</span></div>
+      <div class="spec-row"><span class="spec-k">색</span><span class="spec-v">흰 바탕 · 액센트 딥그린 #1D6B58 하나만 · 심각 #B23A2B — 색을 아껴 밀도를 감당</span></div>
+      <div class="spec-row"><span class="spec-k">유리한 때</span><span class="spec-v">항목이 10~20개로 많을 때. 반복 사용하는 실무 도구일 때. 인쇄·PDF로 뽑을 때</span></div>
+      <div class="spec-row"><span class="spec-k">약점</span><span class="spec-v">첫인상이 수수하다. 심사 스크린샷 한 장으로는 임팩트가 약하다</span></div>
+    </div>
+
+    <p class="frame-label">↓ 실제 렌더링</p>
+    <div class="frame">
+      <div class="c">
+        <div class="c-top">
+          <p class="c-kick">누락 검토 · 심각 5건</p>
+          <h3 class="c-title">반려동물 산책 앱 스토어 등록 및 6개월 유지보수</h3>
+        </div>
+
+        <div class="c-bar">
+          <div class="c-cell"><p class="c-ck">제시 금액</p><p class="c-cv">600만~900만</p></div>
+          <div class="c-cell"><p class="c-ck">보정 후</p><p class="c-cv hot">920만~1,760만</p></div>
+          <div class="c-cell"><p class="c-ck">추가 공수</p><p class="c-cv">64~220시간</p></div>
+          <div class="c-cell"><p class="c-ck">숨은 작업</p><p class="c-cv">10건</p></div>
+        </div>
+        <p class="c-note">단가 40만원/일 기준 환산 · 공수 추정에는 영향 없음</p>
+
+        <div class="c-verdict">
+          <span class="c-vw">위험</span>
+          <p class="c-vt">반려 사유가 공개되지 않은 채 신규 개발 가능성이 크고, 증액이 금지돼 있으며, 6개월 상시 대기가 정액에 포함돼 있다.</p>
+        </div>
+
+        <div class="c-listhead">
+          <span>요청문에 없는 작업</span>
+          <span>공수</span>
+        </div>
+
+        <div class="c-line">
+          <span class="c-mark hi"></span>
+          <div class="c-main">
+            <p class="c-ln">Apple 가이드라인 대응 — 신고·차단·필터링·연락처</p>
+            <p class="c-ld">이용자끼리 만나고 대화하는 앱은 이 4종이 없으면 반려된다. 2회 반려 사유가 이것일 가능성이 높다.</p>
+            <p class="c-lm">S6 법적·행정 · 계약상 <b>제외</b> — ‘신규 개발 없이 오류 수정만’</p>
+          </div>
+          <span class="c-hrs">20~40h</span>
+        </div>
+
+        <div class="c-line">
+          <span class="c-mark hi"></span>
+          <div class="c-main">
+            <p class="c-ln">반려 사유 원문 확보 및 원인 분석</p>
+            <p class="c-ld">반려 사유가 요청문에 없어 수정 범위를 산정할 수 없다. 이것 없이는 견적 자체가 불가능하다.</p>
+            <p class="c-lm">S1 한 줄로 적힌 큰 일 · 계약상 <b>미언급</b></p>
+          </div>
+          <span class="c-hrs">2~4h</span>
+        </div>
+
+        <div class="c-line">
+          <span class="c-mark hi"></span>
+          <div class="c-main">
+            <p class="c-ln">스토어 계정 소유권 확인 및 이관</p>
+            <p class="c-ld">이전 개발사가 등록했다면 계정이 그쪽 소유일 수 있고, 이미 이탈한 상태라 협조를 못 받으면 등록 자체가 진행되지 않는다.</p>
+            <p class="c-lm">S3 우리가 직접 하겠다는 것 · 계약상 <b>애매</b></p>
+          </div>
+          <span class="c-hrs">2~80h</span>
+        </div>
+
+        <div class="c-line">
+          <span class="c-mark hi"></span>
+          <div class="c-main">
+            <p class="c-ln">24시간 기준 장애 대응 = 6개월간 상시 대기</p>
+            <p class="c-ld">주말·야간에도 연락받을 수 있어야 한다. 일한 시간이 아니라 묶여 있는 시간이므로 별도로 계상해야 한다.</p>
+            <p class="c-lm">S7 기다리는 시간 · 계약상 <b>포함</b> — 월 3시간에서 차감되지 않음</p>
+          </div>
+          <span class="c-hrs">환산 불가</span>
+        </div>
+
+        <div class="c-line">
+          <span class="c-mark mid"></span>
+          <div class="c-main">
+            <p class="c-ln">앱 내 계정 삭제 기능</p>
+            <p class="c-ld">계정을 만드는 앱은 양 스토어 모두 앱 안에서 계정을 지울 수 있는 경로를 요구한다.</p>
+            <p class="c-lm">S6 법적·행정 · 계약상 <b>제외</b></p>
+          </div>
+          <span class="c-hrs">8~16h</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 마무리 ============ -->
+  <section class="close">
+    <div class="dir-head">
+      <p class="dir-tag">방향과 무관하게</p>
+      <h2>어느 것을 고르든 먼저 고쳐야 하는 세 가지</h2>
+    </div>
+    <ul>
+      <li><b>웹폰트를 불러온다.</b> 지금 <code>app/layout.tsx</code>에 폰트 로드가 없어 보는 사람 컴퓨터의 기본 글꼴로 그려진다. 맥과 윈도우에서 다르게 보이고, 어느 쪽이든 “문서” 느낌이 난다. 디자인을 아무리 다듬어도 이게 그대로면 계속 구려 보인다. <b>단일 최대 요인이다.</b></li>
+      <li><b>브랜드 색과 경고색을 분리한다.</b> 지금 <code>tailwind.config.ts</code>의 색 7개 중 3개가 전부 심각도용이라, 화면에 있는 유일한 색이 경고색이다. 결과 화면이 온통 빨간 이유이고, 그래서 <b>정작 진짜 심각한 항목이 안 튄다.</b></li>
+      <li><b>예시 버튼이 다 같은 결과를 낸다.</b> ‘지역 축제’를 눌렀는데 ‘반려동물 앱’ 결과가 나왔다. 심사위원이 예시 3개를 눌러보면 바로 보인다. 디자인보다 이게 먼저다.</li>
+    </ul>
+    <p class="dir-why">이 세 가지는 방향 선택과 무관하게 공통이다. 방향을 아직 못 골라도 이것부터 손대면 체감이 크게 달라진다.</p>
+  </section>
+
+  <footer>
+    <p>믿을구석 (Backstop) · 결과 화면 시안 3안 · 2026-08-31<br>
+    내용은 배포본 backstop-seven.vercel.app 의 예시 결과를 그대로 사용했다</p>
+  </footer>
+
+</div>
