@@ -1,0 +1,153 @@
+{
+  "eligibility_blockers": [],
+  "hidden_tasks": [
+    {
+      "id": "H1",
+      "task": "Apple 가이드라인 대응 기능 — 이용자 신고·차단·콘텐츠 필터링·연락처 게시",
+      "slot": "S6",
+      "why": "이용자끼리 만나고 대화하는 앱은 신고·차단·필터링·개발자 연락처 4종이 없으면 반려된다. 2회 반려 사유가 이것일 가능성이 높다.",
+      "evidence_quote": "Apple 심사에서 2회 반려된 뒤 그 개발사가 이탈했습니다.",
+      "contract_conflict": "제외",
+      "conflict_note": "계약은 '신규 개발 없이 기존 코드 검토와 오류 수정만'. 이 기능이 없으면 신규 개발이라 범위 밖이다.",
+      "hours_min": 20,
+      "hours_max": 40,
+      "severity": "high",
+      "confidence": "medium"
+    },
+    {
+      "id": "H2",
+      "task": "반려 사유 원문 확보 및 원인 분석",
+      "slot": "S1",
+      "why": "반려 사유가 요청문에 없어 수정 범위를 산정할 수 없다. 이것 없이는 견적 자체가 불가능하다.",
+      "evidence_quote": "Apple은 2회 반려 이력이 있습니다. 반려 사유 수정과 재심사 대응까지 포함합니다.",
+      "contract_conflict": "미언급",
+      "conflict_note": "'반려 사유 수정'이 범위에 있으나 그 사유가 무엇인지가 공개되지 않았다.",
+      "hours_min": 2,
+      "hours_max": 4,
+      "severity": "high",
+      "confidence": "high"
+    },
+    {
+      "id": "H3",
+      "task": "스토어 계정 소유권 확인 및 이관",
+      "slot": "S3",
+      "why": "이전 개발사가 등록했다면 계정이 그쪽 소유일 수 있고, 이미 이탈한 상태라 협조를 못 받으면 등록 자체가 진행되지 않는다.",
+      "evidence_quote": "Android는 이전 개발사가 등록한 이력이 있고",
+      "contract_conflict": "애매",
+      "conflict_note": "통제 불가 리스크. 이관이 막히면 프로젝트가 정지한다.",
+      "hours_min": 2,
+      "hours_max": 80,
+      "severity": "high",
+      "confidence": "medium"
+    },
+    {
+      "id": "H4",
+      "task": "심사용 데모 계정 및 더미 데이터 세팅",
+      "slot": "S6",
+      "why": "로그인이 필요한 앱은 심사자용 데모 계정이 필수다. 매칭 서비스는 상대 이용자가 있어야 기능 확인이 되므로 더미 데이터를 따로 만들어야 한다.",
+      "evidence_quote": "양 스토어 등록: Android는 이전 개발사가 등록한 이력이 있고, Apple은 2회 반려 이력이 있습니다.",
+      "contract_conflict": "미언급",
+      "conflict_note": "등록 작업에 포함된 것으로 읽히지만 별도 공수가 든다.",
+      "hours_min": 4,
+      "hours_max": 8,
+      "severity": "medium",
+      "confidence": "medium"
+    },
+    {
+      "id": "H5",
+      "task": "앱 내 계정 삭제 기능",
+      "slot": "S6",
+      "why": "계정을 만드는 앱은 양 스토어 모두 앱 안에서 계정을 지울 수 있는 경로를 요구한다.",
+      "evidence_quote": "개발이 끝난 반려동물 산책 매칭 앱(iOS·Android)을 스토어에 등록하고",
+      "contract_conflict": "제외",
+      "conflict_note": "없으면 신규 개발이라 월 3시간 한도로는 불가능하다.",
+      "hours_min": 8,
+      "hours_max": 16,
+      "severity": "high",
+      "confidence": "low"
+    },
+    {
+      "id": "H6",
+      "task": "API 명세서 부재 시 역분석",
+      "slot": "S2",
+      "why": "명세서가 없으면 백엔드와 관리자 웹 동작을 코드에서 거꾸로 파악해야 한다.",
+      "evidence_quote": "준비 중인 것: API 명세서는 보유 여부를 확인 중입니다.",
+      "contract_conflict": "미언급",
+      "conflict_note": "'준비 중'이 아니라 '있는지도 모르는' 상태다.",
+      "hours_min": 8,
+      "hours_max": 24,
+      "severity": "medium",
+      "confidence": "high"
+    },
+    {
+      "id": "H7",
+      "task": "개인정보처리방침·데이터 안전 항목 작성",
+      "slot": "S6",
+      "why": "스토어 등록에 필수 항목이며, 위치·사진 등 민감 항목이 많아 작성 분량이 크다.",
+      "evidence_quote": "양 스토어 등록",
+      "contract_conflict": "미언급",
+      "conflict_note": "작성 주체가 정해져 있지 않다.",
+      "hours_min": 4,
+      "hours_max": 8,
+      "severity": "medium",
+      "confidence": "medium"
+    },
+    {
+      "id": "H8",
+      "task": "계약 기간 중 스토어 정책 변경 대응",
+      "slot": "S8",
+      "why": "스토어는 매년 최소 지원 버전을 올린다. 6개월 안에 마감이 오면 업그레이드가 필요하다.",
+      "evidence_quote": "이번 범위에서 제외(별도 계약): 월 3시간을 초과하는 신규 개발, 디자인 개편, 메이저 버전 업그레이드",
+      "contract_conflict": "제외",
+      "conflict_note": "정책 마감이 오면 앱이 내려가는데 계약상 고칠 수 없는 상태가 된다.",
+      "hours_min": 16,
+      "hours_max": 40,
+      "severity": "medium",
+      "confidence": "medium"
+    },
+    {
+      "id": "H9",
+      "task": "자동 연장 조항 검토",
+      "slot": "S8",
+      "why": "종료 30일 전 통보가 없으면 1개월씩 자동 연장된다. 통보 시점을 놓치면 원치 않는 기간이 늘어난다.",
+      "evidence_quote": "종료 30일 전까지 통보가 없으면 1개월씩 자동 연장됩니다.",
+      "contract_conflict": "포함",
+      "conflict_note": "계약 조건 자체의 리스크다.",
+      "hours_min": 0,
+      "hours_max": 0,
+      "severity": "medium",
+      "confidence": "high"
+    },
+    {
+      "id": "H10",
+      "task": "24시간 기준 장애 대응 = 6개월간 상시 대기",
+      "slot": "S7",
+      "why": "12시간 이내 복구를 약속하려면 주말·야간에도 연락받을 수 있어야 한다. 일한 시간이 아니라 묶여 있는 시간이므로 별도로 계상해야 한다.",
+      "evidence_quote": "서버 장애 대응: 24시간 기준 12시간 이내 복구 또는 우회 조치",
+      "contract_conflict": "포함",
+      "conflict_note": "월 3시간 한도에서 차감되지 않는 항목이라 사실상 무제한 대기다.",
+      "hours_min": 0,
+      "hours_max": 0,
+      "severity": "high",
+      "confidence": "high"
+    }
+  ],
+  "questions": [
+    { "q": "Apple 반려 사유 원문(Resolution Center 메시지)을 그대로 볼 수 있나요?", "why": "수정이 '오류 수정'인지 '신규 개발'인지가 여기서 갈립니다.", "blocking": true },
+    { "q": "양 스토어 계정의 소유자가 누구이며 이관이 가능한 상태인가요?", "why": "이관이 막히면 프로젝트가 정지합니다.", "blocking": true },
+    { "q": "앱에 신고·차단·필터링·계정 삭제 기능이 지금 구현돼 있나요?", "why": "없으면 월 3시간 한도로는 불가능합니다.", "blocking": true },
+    { "q": "반려 사유 해소에 신규 개발이 필요하면 그 비용은 별도 협의 대상인가요?", "why": "증액 불가 조건과 정면으로 충돌합니다.", "blocking": true },
+    { "q": "장애 대응의 실제 대응 시간대는 어떻게 되나요? (24시간인지 영업시간인지)", "why": "6개월 상시 대기 여부가 갈립니다.", "blocking": false },
+    { "q": "API 명세서가 있나요?", "why": "없으면 역분석 공수가 추가됩니다.", "blocking": false }
+  ],
+  "verdict": {
+    "decision": "위험",
+    "reason": "반려 사유가 공개되지 않은 상태에서 신규 개발 가능성이 크고, 증액이 금지돼 있으며, 6개월 상시 대기가 정액에 포함돼 있다.",
+    "conditions": [
+      "반려 사유 원문 공개",
+      "신규 개발이 필요할 경우 별도 협의를 문서로 명시",
+      "스토어 계정 이관 가능 여부 확인",
+      "장애 대응 시간대와 범위를 계약서에 한정"
+    ]
+  }
+}

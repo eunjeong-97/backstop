@@ -1,0 +1,26 @@
+# 의존성 · 빌드
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+
+# 환경변수 (API 키)
+.env
+.env.local
+.env*.local
+
+# 실행 결과
+out/
+
+# 자동 생성 (prebuild 가 만든다)
+lib/prompts.generated.ts
+
+# 타사 공고문 원문 — 저장소에 재배포하지 않는다
+golden/requests/
+golden/answers/정답지/
+golden/요청문목록.txt
+
+# 기타
+.DS_Store
+.vercel
+venv/
