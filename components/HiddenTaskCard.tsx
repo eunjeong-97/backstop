@@ -9,6 +9,12 @@ const SEV_STYLE: Record<HiddenTask["severity"], string> = {
   low: "bg-low/10 text-low",
 };
 
+const SEV_BORDER: Record<HiddenTask["severity"], string> = {
+  high: "border-l-high",
+  medium: "border-l-mid",
+  low: "border-l-line",
+};
+
 const CONFLICT_STYLE: Record<string, string> = {
   제외: "bg-high/10 text-high",
   애매: "bg-mid/10 text-mid",
@@ -21,16 +27,16 @@ export function HiddenTaskCard({ task, index }: { task: HiddenTask; index: numbe
   const hasHours = task.hours_max > 0;
 
   return (
-    <li className="card">
+    <li className={`card border-l-[3px] ${SEV_BORDER[task.severity]}`}>
       <div className="flex flex-wrap items-center gap-1.5">
         <span className={`badge ${SEV_STYLE[task.severity]}`}>{SEVERITY_LABEL[task.severity]}</span>
-        <span className="badge bg-bg text-sub" title={SLOT_LABEL[task.slot]}>
+        <span className="badge bg-line text-sub" title={SLOT_LABEL[task.slot]}>
           {task.slot} {SLOT_LABEL[task.slot]}
         </span>
         {task.confidence === "low" && (
-          <span className="badge bg-bg text-sub">확인 필요</span>
+          <span className="badge bg-line text-sub">확인 필요</span>
         )}
-        <span className="ml-auto text-xs text-sub">
+        <span className="num ml-auto text-xs text-sub">
           {hasHours ? `${task.hours_min}~${task.hours_max}시간` : "시간 환산 안 됨"}
         </span>
       </div>
@@ -44,7 +50,7 @@ export function HiddenTaskCard({ task, index }: { task: HiddenTask; index: numbe
 
       <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
         <span className="text-sub">계약상</span>
-        <span className={`badge ${CONFLICT_STYLE[task.contract_conflict] ?? "bg-bg text-sub"}`}>
+        <span className={`badge ${CONFLICT_STYLE[task.contract_conflict] ?? "bg-line text-sub"}`}>
           {task.contract_conflict}
         </span>
         {task.conflict_note && <span className="text-sub">{task.conflict_note}</span>}

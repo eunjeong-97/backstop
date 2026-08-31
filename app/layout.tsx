@@ -30,6 +30,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
+      <head>
+        {/* 폰트를 불러오지 않으면 보는 사람 컴퓨터의 기본 글꼴로 그려진다.
+            맥과 윈도우에서 다르게 보이는 것을 막는다. docs/화면-디자인-규칙.md 1번 */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+        />
+      </head>
       <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );

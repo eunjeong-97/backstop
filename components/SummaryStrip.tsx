@@ -35,12 +35,13 @@ export function SummaryStrip({
           <p className="mt-2 text-xs text-sub">요청문에 적힌 것만 반영된 금액입니다</p>
         </div>
 
-        <div className="rounded-xl border border-high/30 bg-high/5 p-5">
-          <p className="text-sm text-high/80">안 적힌 일까지 넣으면</p>
-          <p className="mt-1 text-2xl font-bold text-high">
+        <div className="rounded-[3px] border border-accent/30 bg-accent/5 p-5">
+          <p className="text-sm text-accent/80">안 적힌 일까지 넣으면</p>
+          {/* 등폭 숫자는 일반 폰트보다 폭이 넓다. 카드 폭을 넘기지 않도록 한 단계 줄인다 */}
+          <p className="num mt-1 text-xl font-bold leading-tight text-accent">
             {won(quote.low)} ~ {won(quote.high)}
           </p>
-          <p className="mt-2 text-xs text-high/80">
+          <p className="num mt-2 text-xs text-accent/80">
             추가 공수 {hours.min}~{hours.max}시간 ({days(quote.lowDays)}~{days(quote.highDays)})
           </p>
         </div>

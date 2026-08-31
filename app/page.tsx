@@ -91,7 +91,7 @@ export default function Home() {
           입니다.
         </p>
 
-        <div className="mt-5 rounded-xl border border-line bg-white p-4 text-sm leading-relaxed">
+        <div className="mt-5 rounded-[3px] border border-line bg-card p-4 text-sm leading-relaxed">
           <p className="text-sub">예를 들어 이런 한 줄 뒤에</p>
           <p className="mt-1.5 border-l-2 border-line pl-3 italic text-ink">
             “회원 데이터 이관”

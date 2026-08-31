@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light; }
+/* 방향 B(판정 계기판) — 어두운 화면이 기본이다. docs/화면-디자인-규칙.md 참조 */
+:root { color-scheme: dark; }
 
 body {
   background: theme("colors.bg");
@@ -11,22 +12,28 @@ body {
 }
 
 @layer components {
+  /* 모서리 3px 로 통일한다. 날카로울수록 도구답다 */
   .card {
-    @apply rounded-xl border border-line bg-white p-5;
+    @apply rounded-[3px] border border-line bg-card p-5;
   }
   .badge {
-    @apply inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium;
+    @apply inline-flex items-center rounded-[2px] px-2 py-0.5 text-xs font-semibold;
   }
   .btn {
-    @apply inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-medium transition;
+    @apply inline-flex items-center justify-center rounded-[3px] px-4 py-2.5 text-sm font-bold transition;
   }
+  /* 어두운 화면에서 검은 버튼은 보이지 않는다 — 액센트 배경 + 어두운 글자 */
   .btn-primary {
-    @apply btn bg-ink text-white hover:opacity-90 disabled:opacity-40;
+    @apply btn bg-accent text-bg hover:brightness-110 disabled:opacity-35;
   }
   .btn-ghost {
-    @apply btn border border-line bg-white hover:bg-bg;
+    @apply btn border border-line bg-card text-ink hover:border-mute;
   }
   .label {
     @apply mb-1.5 block text-sm font-medium text-ink;
+  }
+  /* 숫자가 세로로 정렬되는 곳(금액·공수·건수)에 붙인다 */
+  .num {
+    @apply font-mono tabular-nums;
   }
 }

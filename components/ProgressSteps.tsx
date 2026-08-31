@@ -55,9 +55,9 @@ export function ProgressSteps({ phase }: { phase: Phase }) {
                 aria-hidden
                 className={
                   state === "done"
-                    ? "grid h-5 w-5 place-items-center rounded-full bg-ink text-[11px] text-white"
+                    ? "grid h-5 w-5 place-items-center rounded-full bg-accent text-[11px] font-bold text-bg"
                     : state === "doing"
-                      ? "h-5 w-5 animate-pulse rounded-full bg-ink/20"
+                      ? "h-5 w-5 animate-pulse rounded-full bg-line"
                       : "h-5 w-5 rounded-full border border-line"
                 }
               >
