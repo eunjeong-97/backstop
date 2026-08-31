@@ -35,12 +35,12 @@ export function HiddenTaskCard({ task, index }: { task: HiddenTask; index: numbe
         </span>
       </div>
 
-      <h3 className="mt-2.5 font-semibold leading-snug">
+      <h3 className="mt-2.5 break-words font-semibold leading-snug">
         <span className="mr-1.5 text-sub">{index + 1}.</span>
         {task.task}
       </h3>
 
-      <p className="mt-2 text-sm leading-relaxed text-sub">{task.why}</p>
+      <p className="mt-2 break-words text-sm leading-relaxed text-sub">{task.why}</p>
 
       <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
         <span className="text-sub">계약상</span>
@@ -55,13 +55,13 @@ export function HiddenTaskCard({ task, index }: { task: HiddenTask; index: numbe
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="text-xs font-medium text-sub underline underline-offset-4"
+            className="inline-flex min-h-9 items-center text-xs font-medium text-sub underline underline-offset-4"
             aria-expanded={open}
           >
             {open ? "근거 숨기기" : "요청문 근거 보기"}
           </button>
           {open && (
-            <blockquote className="mt-2 border-l-2 border-line pl-3 text-sm italic leading-relaxed text-sub">
+            <blockquote className="mt-2 break-words border-l-2 border-line pl-3 text-sm italic leading-relaxed text-sub">
               “{task.evidence_quote}”
             </blockquote>
           )}

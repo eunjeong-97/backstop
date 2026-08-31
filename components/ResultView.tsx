@@ -135,7 +135,11 @@ export function ResultView({
       </section>
 
       <div className="flex justify-center pb-4">
-        <button type="button" onClick={copyAll} className="btn-ghost">
+        <button
+          type="button"
+          onClick={copyAll}
+          className="btn-ghost min-h-11 w-full sm:w-auto"
+        >
           {copied ? "복사했습니다" : "결과 전체 복사 (제안서용)"}
         </button>
       </div>

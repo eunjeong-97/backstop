@@ -35,7 +35,7 @@ export function RequestForm({
     <div className="space-y-5">
       <div>
         <p className="label">처음이라면 예시로 먼저 해보세요</p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           {SAMPLES.map((s) => (
             <button
               key={s.id}
@@ -45,7 +45,7 @@ export function RequestForm({
                 setText(s.text);
                 setKind(s.kind);
               }}
-              className="btn-ghost flex-col items-start gap-0.5 !px-3 !py-2 text-left disabled:opacity-40"
+              className="btn-ghost w-full min-h-11 flex-col items-start justify-center gap-0.5 !px-3.5 !py-2.5 text-left disabled:opacity-40 sm:w-auto"
             >
               <span className="text-sm font-medium">{s.label}</span>
               <span className="text-xs text-sub">{s.hint}</span>
@@ -63,9 +63,9 @@ export function RequestForm({
           value={text}
           onChange={(e) => setText(e.target.value)}
           disabled={busy}
-          rows={12}
+          rows={8}
           placeholder="크몽·위시켓 등에서 받은 요청 내용을 그대로 붙여넣으세요."
-          className="w-full resize-y rounded-xl border border-line bg-white p-4 text-sm leading-relaxed outline-none placeholder:text-sub/60 focus:border-ink/30 disabled:opacity-60"
+          className="w-full resize-y rounded-xl border border-line bg-white p-4 text-base leading-relaxed outline-none placeholder:text-sub/60 focus:border-ink/30 disabled:opacity-60 sm:min-h-[22rem] sm:text-sm"
         />
         <div className={`mt-1 text-right text-xs ${over ? "text-high" : "text-sub"}`}>
           {text.length.toLocaleString()} / {MAX_INPUT_CHARS.toLocaleString()}자
@@ -85,8 +85,8 @@ export function RequestForm({
                 aria-pressed={kind === k.value}
                 className={
                   kind === k.value
-                    ? "btn bg-ink text-white !px-4"
-                    : "btn-ghost !px-4 disabled:opacity-40"
+                    ? "btn min-h-11 flex-1 bg-ink text-white !px-4 sm:flex-none"
+                    : "btn-ghost min-h-11 flex-1 !px-4 disabled:opacity-40 sm:flex-none"
                 }
               >
                 {k.label}
@@ -107,7 +107,7 @@ export function RequestForm({
             value={rate}
             disabled={busy}
             onChange={(e) => setRate(Number(e.target.value) || 0)}
-            className="w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm outline-none focus:border-ink/30 disabled:opacity-60"
+            className="min-h-11 w-full rounded-xl border border-line bg-white px-4 py-2.5 text-base outline-none focus:border-ink/30 disabled:opacity-60 sm:text-sm"
           />
           <p className="mt-1 text-xs text-sub">견적 환산에만 씁니다. 공수 추정에는 영향이 없습니다.</p>
         </div>

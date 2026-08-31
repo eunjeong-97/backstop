@@ -13,7 +13,7 @@ export function QuestionList({ questions }: { questions: Stage2Result["questions
           <div className="flex items-start gap-2">
             <span className="mt-0.5 text-sm font-semibold text-sub">{i + 1}</span>
             <div className="min-w-0">
-              <p className="font-medium leading-snug">
+              <p className="break-words font-medium leading-snug">
                 {q.q}
                 {q.blocking && (
                   <span className="badge ml-2 bg-high/10 text-high align-middle">필수</span>
