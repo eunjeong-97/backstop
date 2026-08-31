@@ -1,0 +1,629 @@
+<title>믿을구석 안내서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground: #F4F6F7;
+    --surface: #FFFFFF;
+    --surface-sunk: #EAEEEF;
+    --ink: #151F24;
+    --ink-soft: #3A4A4F;
+    --muted: #5F7175;
+    --line: #D9E0E1;
+    --line-strong: #B9C5C6;
+    --accent: #0F6156;
+    --accent-soft: #E2EFEC;
+    --signal: #A85C15;
+    --signal-soft: #F6EDE1;
+
+    --f-display: "Gowun Batang", "Nanum Myeongjo", Georgia, serif;
+    --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111819;
+      --surface: #182223;
+      --surface-sunk: #0D1314;
+      --ink: #E1EAEA;
+      --ink-soft: #C0CDCD;
+      --muted: #8B9C9C;
+      --line: #2A3737;
+      --line-strong: #3D4E4E;
+      --accent: #57B9A7;
+      --accent-soft: #16302C;
+      --signal: #DB9A4E;
+      --signal-soft: #2C2116;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #111819;
+    --surface: #182223;
+    --surface-sunk: #0D1314;
+    --ink: #E1EAEA;
+    --ink-soft: #C0CDCD;
+    --muted: #8B9C9C;
+    --line: #2A3737;
+    --line-strong: #3D4E4E;
+    --accent: #57B9A7;
+    --accent-soft: #16302C;
+    --signal: #DB9A4E;
+    --signal-soft: #2C2116;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.85;
+    margin: 0;
+    padding: 0 24px 120px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 40rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  header.mast {
+    padding: 88px 0 44px;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .kicker {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(42px, 9vw, 62px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .standfirst {
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 32rem;
+  }
+
+  .mast-meta {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    padding-top: 8px;
+  }
+
+  section {
+    padding: 56px 0 8px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  section:last-of-type { border-bottom: 0; }
+
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.3;
+    margin: -12px 0 0;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-family: var(--f-body);
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.5;
+    margin: 12px 0 -10px;
+    color: var(--ink);
+  }
+
+  p { margin: 0; }
+
+  strong { font-weight: 600; color: var(--ink); }
+
+  em {
+    font-style: normal;
+    background: var(--signal-soft);
+    box-shadow: 0 -0.35em 0 var(--signal-soft) inset;
+    padding: 0 1px;
+  }
+
+  ul, ol {
+    margin: 0;
+    padding-left: 1.25em;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  li::marker { color: var(--muted); }
+
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .pair {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .pair-quote {
+    padding: 20px 22px;
+    border-left: 3px solid var(--line-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pair-label {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .pair-quote q {
+    font-family: var(--f-display);
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    quotes: "\201C" "\201D";
+  }
+
+  .pair-quote q + q { margin-top: 8px; display: block; }
+
+  .pair-find {
+    padding: 18px 22px;
+    border-top: 1px solid var(--line);
+    border-left: 3px solid var(--signal);
+    background: var(--surface-sunk);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pair-find .pair-label { color: var(--signal); }
+
+  .pair-find p { font-size: 16px; line-height: 1.7; }
+
+  .slots {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .slot {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr;
+    gap: 4px 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+
+  .slot-wide { grid-template-columns: 4.8rem 1fr; }
+
+  .slot-id {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .slot-name { font-weight: 500; font-size: 17px; }
+
+  .slot-note {
+    grid-column: 2;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  .slot.is-focus .slot-id { color: var(--signal); }
+  .slot.is-focus .slot-name::after {
+    content: "오늘 고친 칸";
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--signal);
+    border: 1px solid var(--signal);
+    border-radius: 2px;
+    padding: 2px 6px;
+    margin-left: 10px;
+    white-space: nowrap;
+    vertical-align: 2px;
+  }
+
+  .note {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .note .pair-label { color: var(--accent); }
+  .note p { font-size: 16px; line-height: 1.7; }
+
+  .status { display: flex; flex-direction: column; gap: 12px; }
+
+  .status-row {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 4px 14px;
+    align-items: baseline;
+  }
+
+  .tag {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 3px 0;
+    border-radius: 2px;
+    border: 1px solid currentColor;
+  }
+
+  .tag-done { color: var(--accent); }
+  .tag-open { color: var(--signal); }
+  .tag-wait { color: var(--muted); }
+
+  dl { margin: 0; display: flex; flex-direction: column; gap: 18px; }
+  dt { font-weight: 600; font-size: 16px; }
+  dd {
+    margin: 4px 0 0;
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  footer {
+    padding-top: 48px;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    margin-top: 48px;
+  }
+
+  @media (max-width: 560px) {
+    body { font-size: 16px; padding: 0 18px 80px; }
+    header.mast { padding-top: 56px; }
+    .slot, .slot-wide, .status-row { grid-template-columns: 1fr; }
+    .slot-note { grid-column: 1; }
+    .tag { max-width: 5.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="kicker">프로젝트 안내서 · 2026-08-31</p>
+    <h1>믿을구석</h1>
+    <p class="standfirst">외주 요청문을 넣으면, 거기 <strong>안 적혀 있는데 실제로는 해야 하는 일</strong>을 찾아주는 도구. 프리랜서가 견적에서 빠뜨려 손해 보는 항목을 계약 전에 잡는 것이 목적이다.</p>
+    <div class="mast-meta">
+      <span>원티드 AI Championship 2026 출품작</span>
+      <span>제출 마감 09-20</span>
+      <span>배포 마지노선 09-14</span>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">1. 무엇을 해결하는가</p>
+    <h2>손해는 싸게 불러서 나지 않는다. 안 적힌 일을 못 세서 난다.</h2>
+    <p>프리랜서가 외주에서 적자를 보는 흔한 경로는 이렇다. 클라이언트가 보낸 요청문을 읽고, 거기 적힌 항목을 하나씩 세어 견적을 낸다. 여기까지는 누구나 한다.</p>
+    <p>문제는 <strong>요청문에 적히지 않은 일</strong>이다. 적혀 있지 않으니 세지 않고, 세지 않았으니 견적에 없고, 견적에 없으니 돈을 못 받는다. 그런데 계약을 하고 나면 그 일은 반드시 해야 한다.</p>
+    <p>「믿을구석」은 이 빠진 항목을 계약 전에 찾아준다. 답하려는 질문은 <strong>“얼마인가”가 아니라 “무엇이 빠졌는가”</strong>다.</p>
+    <div class="note">
+      <p class="pair-label">이름의 뜻</p>
+      <p>Backstop은 야구에서 홈플레이트 뒤에 친 그물이다. 놓친 공이 관중석으로 날아가지 않게 막는다. 금융·계약에서는 ‘최후의 보증’을 뜻한다. 놓친 작업이 손해가 되기 전에 막는다는 뜻으로 골랐다.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">2. 실제 요청문으로 보기</p>
+    <h2>쇼핑몰 연말 이벤트 페이지 — 예산 700~1,200만원, 기간 30일</h2>
+    <p>실제로 수집한 요청문 하나다. QR을 찍으면 별자리 운세가 나오고 쿠폰이 발급되는 이벤트 페이지를 만들어달라는 일이다.</p>
+    <p>요청문에 <strong>적혀 있는</strong> 일은 이렇다 — 참여 화면, 매장용 쿠폰 처리 화면, 관리자 집계 화면, 서버와 데이터베이스 구축. 이건 누구나 센다. 아래 네 가지가 안 세는 것들이다.</p>
+
+    <div class="pair">
+      <div class="pair-quote">
+        <p class="pair-label">요청문에 적힌 문장</p>
+        <q>운영 중 장애 대응: 11월 12일부터 12월 31일까지 약 50일</q>
+        <q>주말·연휴 오후처럼 방문객이 몰리는 시간대에 페이지가 느려지거나 열리지 않는 상황입니다. 오픈일을 연기할 수 없고 저희 쪽에 개발자가 없어 현장에서 바로 대응할 수 없습니다</q>
+      </div>
+      <div class="pair-find">
+        <p class="pair-label">여기 숨은 것 — 50일 상시 대기</p>
+        <p>50일 동안 주말과 연휴를 포함해 언제든 연락을 받을 수 있어야 한다. <em>코드를 짜는 시간이 아니라 묶여 있는 시간</em>이다. 이 기간에는 다른 일을 받기 어렵다. 견적서에 “장애 대응”이라고 한 줄 적고 0원으로 넘기면, 50일치 자유를 공짜로 파는 셈이다.</p>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="pair-quote">
+        <p class="pair-label">요청문에 적힌 문장</p>
+        <q>준비 중인 것: 별자리별 운세 문구 12종, 결과 카드·쿠폰 디자인 시안, 참여 매장 확정(10~15개소)</q>
+        <q>목표 시점: 2026년 11월 12일 오픈 — 전시 오픈일과 같은 날이라 연기할 수 없습니다</q>
+      </div>
+      <div class="pair-find">
+        <p class="pair-label">여기 숨은 것 — 재료는 없는데 마감은 고정</p>
+        <p>화면에 넣을 문구와 디자인이 아직 없다. 그런데 오픈 날짜는 못 바꾼다. 클라이언트가 자료를 2주 늦게 주면 <em>그만큼 개발 기간이 줄어드는데, 늦어진 책임은 보통 개발자가 진다.</em> 계약서에 “자료를 며칠까지 받는다”를 날짜로 못 박지 않으면 방어할 방법이 없다.</p>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="pair-quote">
+        <p class="pair-label">요청문에 적힌 문장</p>
+        <q>매장 쿠폰 사용 처리: 참여 매장 10~15개소에서 사용 완료 처리, 중복 사용 차단</q>
+        <q>현장에 운영 인력이 상주하지 않아, 안내를 받지 못한 이용자가 중간에 이탈하는 상황입니다</q>
+      </div>
+      <div class="pair-find">
+        <p class="pair-label">여기 숨은 것 — 매장 직원 문의 대응</p>
+        <p>10~15개 매장에서 교대로 근무하는 직원들이 쓰는 화면인데, 현장에 물어볼 사람이 없다. <em>“이거 어떻게 눌러요” 전화가 전부 개발자에게 온다.</em> 요구사항에는 화면 하나로 적혀 있지만, 운영 중에는 사람 응대 업무로 돌아온다.</p>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="pair-quote">
+        <p class="pair-label">요청문에 적힌 문장</p>
+        <q>운영 종료 시점의 집계 데이터와 응모 데이터 (CSV)</q>
+      </div>
+      <div class="pair-find">
+        <p class="pair-label">여기 숨은 것 — 끝난 뒤에 남는 일</p>
+        <p>12월 31일에 이벤트가 끝나도 일이 끝나지 않는다. 데이터를 정리해 넘기고, 개인정보를 규정대로 파기하고, 최종 집계를 뽑아야 한다. <em>계약 종료일과 작업 종료일은 같지 않다.</em></p>
+      </div>
+    </div>
+
+    <p>이 네 가지를 견적에 넣지 않으면, 900만원을 받고 50일을 묶인 채 매장 문의 전화까지 받게 된다. 「믿을구석」이 하는 일은 이 네 가지를 <strong>계약 전에</strong> 목록으로 뽑아주는 것이다.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">3. 어떻게 찾아내는가</p>
+    <h2>업종별 목록이 아니라, 누락이 숨는 자리 8개</h2>
+    <p>먼저 실제 외주 요청문 21건을 모았다. 그중 5건은 사람이 직접 “여기 이런 게 빠졌다”를 손으로 다 적어봤다. 그러면서 발견한 것이 있다.</p>
+    <p><strong>업종이 달라도 빠지는 위치는 같았다.</strong> 쇼핑몰이든 소개팅 앱이든 폐기물 수거 앱이든, 누락이 나오는 지점이 같은 자리였다.</p>
+    <p>그래서 “요청문에서 누락이 숨는 자리”를 8개로 정리했다. 중요한 구분이 하나 있다 — 이 8개는 <strong>할 일 목록이 아니라 의심할 위치 목록</strong>이다. “로그인 만들기, 결제 붙이기” 같은 작업 이름이 아니라, “요청문에 이런 식으로 적힌 문장을 파봐라”라는 뜻이다. 걸리는 내용은 매번 달라도 걸리는 자리는 같기 때문에, 처음 보는 업종에도 그대로 통한다.</p>
+
+    <div class="slots">
+      <div class="slot">
+        <span class="slot-id">S1</span>
+        <span class="slot-name">한 줄로 적힌 큰 일</span>
+        <span class="slot-note">문장 길이와 실제 공수가 반비례하는 지점. “해외 결제 연동” 한 줄 뒤에 가맹 심사·계약·테스트 계정 대기가 통째로 숨어 있다.</span>
+      </div>
+      <div class="slot">
+        <span class="slot-id">S2</span>
+        <span class="slot-name">“준비 중”이라고 적힌 것</span>
+        <span class="slot-note">아직 없는 자료는 전부 일정 위험이다. 그것이 늦으면 무엇이 멈추는지를 적는다.</span>
+      </div>
+      <div class="slot">
+        <span class="slot-id">S3</span>
+        <span class="slot-name">“우리가 직접 하겠다”는 것</span>
+        <span class="slot-note">클라이언트가 맡은 일. 넘겨받는 형식과 시점이 개발 일정에 걸린다. QR 인쇄를 클라이언트가 해도, 넣을 주소는 개발이 먼저 줘야 인쇄가 시작된다.</span>
+      </div>
+      <div class="slot">
+        <span class="slot-id">S4</span>
+        <span class="slot-name">스스로 “아직 안 정했다”는 것</span>
+        <span class="slot-note">견적 불가 신호. 특히 나중에 바꾸면 이미 만든 것을 뜯어야 하는 항목.</span>
+      </div>
+      <div class="slot">
+        <span class="slot-id">S5</span>
+        <span class="slot-name">범위 밖으로 밀어둔 인접 시스템</span>
+        <span class="slot-note">손은 대야 하는데 계약 범위에는 없는 것. “기존 블로그는 그대로 두고 연결만” 같은 문장이 대표적이다.</span>
+      </div>
+      <div class="slot">
+        <span class="slot-id">S6</span>
+        <span class="slot-name">법적·행정 요건</span>
+        <span class="slot-note">아무도 맡지 않아 개발사로 흘러오는 것. 약관, 개인정보 처리방침, 앱스토어 심사 규정, 폰트 라이선스. 사업자 등록 같은 <strong>지원 자격 제한</strong>은 작업이 아니라 참여 가능 여부라 1순위로 본다.</span>
+      </div>
+      <div class="slot is-focus">
+        <span class="slot-id">S7</span>
+        <span class="slot-name">기다리는 시간</span>
+        <span class="slot-note">일한 시간이 아니라 묶여 있는 시간. 50일 상시 대기, 격주 시연 8~9회, 매장 문의 대응, 종료 후 데이터 정리, 상주 근무 요구.</span>
+      </div>
+      <div class="slot is-focus">
+        <span class="slot-id">S8</span>
+        <span class="slot-name">못 미루는 날짜</span>
+        <span class="slot-note">오픈일은 고정인데 그 날짜를 밀리게 하는 원인이 개발사 밖에 있는 경우. 자료 지연, 착수일 미확정, 계약서의 자동 연장 조항.</span>
+      </div>
+    </div>
+
+    <p>도구는 요청문을 받으면 이 8칸을 순서대로 하나씩 훑는다. 아무것도 안 걸린 칸도 “해당 없음”이라고 판단을 남기게 해서, <strong>안 봐서 빠지는 것</strong>을 막는다.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">4. 지금 만들어져 있는 것</p>
+    <h2>부품 네 개</h2>
+    <ul>
+      <li><strong>요청문 21건</strong> — 실제 외주 사이트에서 모은 시험 문제.</li>
+      <li><strong>정답지 5건</strong> — 그중 5건에 대해 사람이 손으로 “빠진 것”을 다 적어둔 기준표. 현재 항목 58개. 도구가 잘 찾는지 채점할 때의 정답 역할을 한다.</li>
+      <li><strong>지시문 2개</strong> — AI에게 주는 작업 지시서. 1단계는 “요청문에 적힌 것만 정리해라”(추론 금지), 2단계는 “안 적힌 것을 8칸으로 훑어라”. <strong>2단계가 이 제품의 핵심이다.</strong></li>
+      <li><strong>채점 스크립트</strong> — 도구가 낸 답을 정답지와 대조해 몇 %를 찾아냈는지 계산한다.</li>
+    </ul>
+    <div class="note">
+      <p class="pair-label">지켜야 하는 설계 원칙 3가지</p>
+      <p><strong>① 근거 없는 항목은 내지 않는다.</strong> 모든 항목에 “요청문의 이 문장 때문에 그렇게 판단했다”는 원문을 붙인다. <strong>② 공수는 범위로만 답한다.</strong> “3일”이 아니라 “2~5일”. <strong>③ 금액은 계산하지 않는다.</strong> 도구는 일의 양만 추정하고, 단가는 사용자가 넣는다.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">5. 여기까지 온 과정</p>
+    <h2>점수 100점이 나왔고, 그 점수를 버렸다</h2>
+    <h3>1차 실행</h3>
+    <p>AI에게 8칸을 훑게 해서 정답지가 있는 5건을 돌리고 채점했다. 정답지에 적어둔 항목을 전부 찾아내 <strong>100%</strong>가 나왔다.</p>
+    <h3>그런데 무효로 처리했다</h3>
+    <p>정답지를 만든 사람과 도구를 돌린 사람이 같았기 때문이다. <em>답을 아는 상태에서 문제를 푼 셈</em>이라 잘 나오는 게 당연하다. 채점 장치가 작동한다는 것만 확인했고, 실력 측정은 되지 않았다.</p>
+    <h3>대신 뜻밖의 수확</h3>
+    <p>AI가 <strong>정답지에 없던 항목을 18개 더 찾아냈다.</strong> 사람이 손으로 만든 정답지 쪽이 부족했던 것이다. 정답지를 40개에서 58개로 늘렸다.</p>
+    <h3>그리고 신호를 읽었다</h3>
+    <p>18개가 8칸에 골고루 퍼지지 않고 <strong>S7과 S8에만 몰렸다.</strong> 한 칸에서만 자꾸 새로운 유형이 나온다는 것은, 그 칸을 설명하는 글이 너무 짧아 사람도 AI도 거기 뭘 넣어야 할지 몰랐다는 뜻이다. 실제로 S7 설명은 세 줄뿐이었다.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">6. 오늘 한 일 ①</p>
+    <h2>예시를 늘리는 대신, 칸마다 질문을 하나씩 심었다</h2>
+    <p>S7과 S8의 설명을 보강했다. 다만 <strong>예시만 더 많이 적는 방식은 쓰지 않았다.</strong> 예시를 아무리 늘려도 목록에 없는 새로운 형태가 오면 또 빠지기 때문이다.</p>
+    <p>대신 칸마다 <strong>스스로에게 던지는 판단 질문 하나</strong>를 맨 앞에 뒀다. 예시는 그 질문의 답이 되는 하위 유형으로 묶어 아래에 붙였다.</p>
+
+    <div class="pair">
+      <div class="pair-quote">
+        <p class="pair-label">S7 · 기다리는 시간</p>
+        <q>이 항목은 일한 시간인가, 묶여 있는 시간인가</q>
+      </div>
+      <div class="pair-find">
+        <p class="pair-label">이 질문의 답이 되는 5종</p>
+        <p>대기(상시 대기·심사 승인 대기) / 반복 일정(격주 시연처럼 회당은 작아도 기간을 곱하면 커지는 것) / 사람 상대(현장 문의·직원 교육) / 종료 이후(데이터 이관·파기) / 장소 구속(상주 근무 요구).</p>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="pair-quote">
+        <p class="pair-label">S8 · 못 미루는 날짜</p>
+        <q>이 날짜가 밀리면 누가 손해를 보는가</q>
+      </div>
+      <div class="pair-find">
+        <p class="pair-label">이 질문의 답이 되는 4종</p>
+        <p>자료 지연 대 연기 불가 오픈일 / 착수일은 미확정인데 완료일만 고정 / 계약서 자체에 걸린 날짜(자동 연장·통보 기한) / 아무도 요청 안 했는데 오는 기한(스토어 정책 변경 등).</p>
+      </div>
+    </div>
+
+    <p>처음 보는 형태가 와도 질문 하나로 걸러지게 하는 것이 목적이다. 보강 후 <strong>정답지 58개와 표현이 충돌하지 않는지 대조했고, S7·S8에 걸린 10개 항목 전부 통과</strong>했다. 채점 기준인 정답지 파일은 손대지 않았다.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">7. 오늘 한 일 ②</p>
+    <h2>점수를 잴 시험 문제 3건을 따로 뗐다</h2>
+    <p>대회 제출 문서에 “이 도구가 놓친 작업을 몇 % 찾아내는가”를 숫자로 써야 한다. 그런데 <strong>정답지가 있는 5건은 이제 시험 문제로 쓸 수 없다.</strong> 두 번 오염됐기 때문이다.</p>
+    <ul>
+      <li>1차 실행 때 이미 무효가 됐다 — 답을 아는 사람이 풀었다.</li>
+      <li>오늘 작업으로 하나 더 생겼다 — S7·S8 칸을 채우면서 그 5건에 실제로 나온 문장(“격주 스테이징 시연”, “운세 문구 12종”)을 예시로 지시문에 넣었다. <em>시험 문제의 답을 교과서에 적어놓고 그 시험을 보는 상태</em>다.</li>
+    </ul>
+    <p>그래서 남은 16건 중 <strong>3건을 떼어 점수 측정 전용으로 지정했다.</strong> 이 3건은 지시문을 다듬을 때 절대 참고하지 않는다. 기존 5건은 연습용으로 계속 쓴다.</p>
+    <p>아무거나 3개를 뽑으면 안 된다. 비슷한 것끼리 뽑으면 <strong>그 유형만 잘하는 도구인지 전반적으로 잘하는 도구인지 구분이 안 된다.</strong> 그래서 길이·유형·예산 축을 벌리고, 기존 5건이 이미 커버한 유형과 겹치지 않게 골랐다.</p>
+
+    <div class="slots">
+      <div class="slot slot-wide">
+        <span class="slot-id">157190</span>
+        <span class="slot-name">비대면 진료 플랫폼</span>
+        <span class="slot-note">3,500만원 / 120일 / 4,939자 — 가장 긴 요청문이고 의료라 법적 요건이 무겁다. S6이 제대로 작동하는지 보는 문제.</span>
+      </div>
+      <div class="slot slot-wide">
+        <span class="slot-id">157941</span>
+        <span class="slot-name">여행사 전용 ERP (아임웹 연동)</span>
+        <span class="slot-note">2,000만원 / 75일 / 3,320자 — 기존에 쓰던 다른 서비스에 붙이는 일. S5(범위 밖 인접 시스템)가 두꺼운 문제.</span>
+      </div>
+      <div class="slot slot-wide">
+        <span class="slot-id">157864</span>
+        <span class="slot-name">신용카드단말기 관리서버</span>
+        <span class="slot-note">1,000만원 / 30일 / 1,422자 — 가장 짧다. 정보가 적을 때도 찾아내는가를 보는 문제. 기존 5건은 모두 3,000자가 넘어 이 축이 비어 있었다.</span>
+      </div>
+    </div>
+
+    <div class="note">
+      <p class="pair-label">규칙을 사람 기억에 맡기지 않았다</p>
+      <p>“이 3건은 인용하지 않는다”를 문서에만 적어두면 언젠가 깨진다. 오늘 S7·S8을 채우면서 5건의 문장을 무심코 넣은 것이 정확히 그 사고였다 — 규칙을 몰라서가 아니라, 예시를 찾다 보면 손이 가장 가까운 요청문으로 가기 때문이다.</p>
+      <p>그래서 <strong>기계가 검사하게 했다.</strong> 홀드아웃 요청문을 문장 단위로 쪼개 지시문 전문과 대조하는 검사기를 두고, 지시문을 고칠 때마다 돌린다. 섞였으면 경고를 낸다.</p>
+      <p>검사기 자체가 고장 나 있으면 아무것도 못 잡고도 “정상”이라고 할 수 있다. 그래서 <strong>오염이 확실한 요청문으로 먼저 돌려 4건을 잡아내는 것까지 확인한 뒤</strong> 채택했다. 잡힌 4건 중 3건이 오늘 내가 넣은 문장이었다.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">8. 지금 상태</p>
+    <h2>남은 일</h2>
+    <div class="status">
+      <div class="status-row"><span class="tag tag-done">완료</span><span>요청문 21건 수집, 정답지 5건 작성</span></div>
+      <div class="status-row"><span class="tag tag-done">완료</span><span>2단 지시문 + 채점 스크립트</span></div>
+      <div class="status-row"><span class="tag tag-done">완료</span><span>1차 실행 → 정답지 40개 → 58개로 보강</span></div>
+      <div class="status-row"><span class="tag tag-done">완료</span><span>S7·S8 설명 보강 (오늘)</span></div>
+      <div class="status-row"><span class="tag tag-done">완료</span><span>시험 문제 3건 분리 + 오염 검사기 (오늘)</span></div>
+      <div class="status-row"><span class="tag tag-open">다음</span><span>홀드아웃 3건의 정답지 작성 — 만든 뒤 사람 검토 필요</span></div>
+      <div class="status-row"><span class="tag tag-wait">대기</span><span>API 키 발급 — 없으면 점수 측정이 안 된다</span></div>
+      <div class="status-row"><span class="tag tag-wait">예정</span><span>공수·견적 산출 단계 추가</span></div>
+      <div class="status-row"><span class="tag tag-wait">예정</span><span>화면 만들기 + 배포 (마지노선 09-14)</span></div>
+    </div>
+    <p>여기까지 오면 제출 문서에 쓸 숫자가 나온다. 그리고 그 숫자보다 <strong>“오염을 발견하고 시험지를 분리했다”는 과정 자체가 더 좋은 재료</strong>다. 대회 평가가 결과물보다 검증 과정을 본다고 하니 그렇다.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">9. 용어</p>
+    <h2>이 문서에 나온 말들</h2>
+    <dl>
+      <dt>지시문 (프롬프트)</dt>
+      <dd>AI에게 주는 작업 지시서. “이런 순서로 이렇게 판단해라”를 글로 적어둔 것이다. 이 프로젝트에서 실제로 만들고 다듬는 물건이 대부분 이것이다.</dd>
+
+      <dt>정답지</dt>
+      <dd>요청문 하나에 대해 사람이 손으로 “여기 이런 게 빠졌다”를 다 적어둔 기준표. 도구가 낸 답을 이것과 대조해 채점한다.</dd>
+
+      <dt>재현율</dt>
+      <dd>정답지에 적힌 항목 중 도구가 몇 %를 찾아냈는지. 10개 중 7개를 찾으면 70%다. 특히 심각한 누락을 몇 % 잡는지가 이 프로젝트의 주 지표다.</dd>
+
+      <dt>테스트 오염</dt>
+      <dd>답을 이미 아는 상태로 시험을 봐서 점수가 실제 실력보다 높게 나오는 것. 1차 실행의 100%가 이 경우였다.</dd>
+
+      <dt>홀드아웃</dt>
+      <dd>일부러 따로 떼어놓고 손대지 않는 시험 문제. 지시문을 다듬을 때 참고하지 않기 때문에, 그 문제로 잰 점수만 믿을 수 있다.</dd>
+
+      <dt>공수</dt>
+      <dd>어떤 일에 드는 사람의 작업량. 보통 “몇 일”, “몇 시간”으로 센다. 이 도구는 공수만 범위로 추정하고, 거기에 곱할 단가는 사용자가 직접 넣는다.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p>믿을구석 (Backstop) · 프로젝트 정본은 노션 「원티드 AI Championship 2026 — 공식 자료 정리」<br>
+    이 문서 기준일 2026-08-31 · 소스: ~/backstop</p>
+  </footer>
+
+</div>
