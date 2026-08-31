@@ -79,13 +79,24 @@ export default function Home() {
         <p className="mt-2 text-sub">
           혼자 일하는 사람의 사수. 지금은 견적부터 봐드립니다.
         </p>
-        <p className="mt-4 text-sm leading-relaxed text-sub">
+
+        <p className="mt-5 text-[15px] leading-relaxed sm:text-base">
           외주에서 손해를 보는 이유는 가격을 낮게 불러서가 아니라,{" "}
-          <strong className="font-semibold text-ink">
-            요청문에 안 적힌 작업을 견적에 못 넣어서
-          </strong>
-          입니다. 그 안 적힌 일을 찾아 드립니다.
+          <strong className="font-semibold">요청문에 안 적힌 작업을 견적에 못 넣어서</strong>
+          입니다.
         </p>
+
+        <div className="mt-5 rounded-xl border border-line bg-white p-4 text-sm leading-relaxed">
+          <p className="text-sub">예를 들어 이런 한 줄 뒤에</p>
+          <p className="mt-1.5 border-l-2 border-line pl-3 italic text-ink">
+            “회원 데이터 이관”
+          </p>
+          <p className="mt-2.5 text-sub">
+            기존 비밀번호를 새 시스템이 못 읽으면{" "}
+            <strong className="font-semibold text-high">전 회원이 비밀번호를 다시 만들어야</strong>{" "}
+            합니다. 운영 중인 서비스라면 사고입니다. 이런 걸 찾아 드립니다.
+          </p>
+        </div>
       </header>
 
       <section className="card">
