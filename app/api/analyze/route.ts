@@ -4,10 +4,32 @@ import { callClaude, parseJson } from "@/lib/anthropic";
 import { STAGE2_PROMPT } from "@/lib/prompts.generated";
 import { clientKey, rateLimited, shouldMock, validateInput } from "@/lib/guard";
 import type { Envelope, Stage1Result, Stage2Result, WorkKind } from "@/lib/types";
-import MOCK_STAGE2 from "@/mock/analyze.sample.json";
+import { SAMPLES } from "@/samples";
+import MOCK_PET from "@/mock/analyze.pet.json";
+import MOCK_FESTIVAL from "@/mock/analyze.festival.json";
+import MOCK_MALL from "@/mock/analyze.mall.json";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
+
+const MOCK_BY_SAMPLE: Record<string, unknown> = {
+  pet: MOCK_PET,
+  festival: MOCK_FESTIVAL,
+  mall: MOCK_MALL,
+};
+
+/**
+ * 예시 모드(API 키 없음·킬스위치)에서 입력이 어느 예시인지 찾는다.
+ * 예전에는 입력을 보지 않고 고정 결과 하나만 돌려줘서, 예시를 무엇을 눌러도 같은 화면이 나왔다.
+ * 사용자가 직접 붙여넣은 요청문이면 못 찾고 null 을 돌려준다.
+ */
+function mockForInput(text: string): Stage2Result | null {
+  const norm = (s: string) => s.replace(/\s+/g, " ").trim();
+  const target = norm(text);
+  const hit = SAMPLES.find((s) => norm(s.text) === target);
+  if (!hit) return null;
+  return (MOCK_BY_SAMPLE[hit.id] as Stage2Result | undefined) ?? null;
+}
 
 const KIND_HINT: Record<WorkKind, string> = {
   web: "이 과제는 웹 서비스 개발이다.",
@@ -28,10 +50,12 @@ export async function POST(request: Request) {
 
   const { mock, note } = shouldMock();
   if (mock) {
+    const matched = mockForInput(body.text ?? "");
     const res: Envelope<Stage2Result> = {
-      data: MOCK_STAGE2 as unknown as Stage2Result,
+      data: (matched ?? (MOCK_PET as unknown as Stage2Result)) as Stage2Result,
       mocked: true,
-      note,
+      // 붙여넣은 요청문은 분석하지 못하므로, 화면에 나오는 것이 남의 사례임을 분명히 알린다
+      note: matched ? note : `${note ?? ""} 아래는 붙여넣으신 요청문이 아니라 준비된 예시 사례의 결과입니다.`.trim(),
     };
     return NextResponse.json(res);
   }
