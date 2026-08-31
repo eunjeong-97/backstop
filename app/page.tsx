@@ -24,7 +24,12 @@ function findBudgetLine(text: string): string | undefined {
     .split("\n")
     .map((l) => l.trim().replace(/^[-·•]\s*/, ""))
     .find((l) => /(예산|금액)/.test(l) && /원/.test(l));
-  return line ? line.replace(/^예산\s*[:：]?\s*/, "") : undefined;
+  if (!line) return undefined;
+  // "예산:" 접두어를 떼고, 뒤에 붙은 부연 문장은 잘라 금액만 남긴다
+  return line
+    .replace(/^예산\s*[:：]?\s*/, "")
+    .split(/\.\s|\.$/)[0]
+    .trim();
 }
 
 export default function Home() {

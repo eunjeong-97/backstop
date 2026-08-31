@@ -25,7 +25,11 @@ export function SummaryStrip({
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="card">
           <p className="text-sm text-sub">클라이언트가 제시한 금액</p>
-          <p className="mt-1 break-keep text-2xl font-bold text-sub">
+          <p
+            className={`mt-1 break-keep font-bold text-sub ${
+              (clientBudget?.length ?? 0) > 24 ? "text-lg leading-snug" : "text-2xl"
+            }`}
+          >
             {clientBudget?.trim() || "요청문에 금액 표기 없음"}
           </p>
           <p className="mt-2 text-xs text-sub">요청문에 적힌 것만 반영된 금액입니다</p>
