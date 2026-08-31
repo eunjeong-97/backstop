@@ -14,8 +14,8 @@ export default {
       fontFamily: {
         // 한글이 있는 곳은 Gothic A1, 숫자·라틴은 Plex Mono.
         // mono 스택에도 Gothic A1 을 넣어, 한글이 섞여도 시스템 고정폭으로 튀지 않게 한다.
-        sans: ['"Gothic A1"', '"Apple SD Gothic Neo"', "system-ui", "sans-serif"],
-        mono: ['"IBM Plex Mono"', '"Gothic A1"', "ui-monospace", "Menlo", "monospace"],
+        sans: ["var(--font-sans)", '"Apple SD Gothic Neo"', "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "var(--font-sans)", "ui-monospace", "Menlo", "monospace"],
       },
       colors: {
         // 바탕 3단계 — 깊이는 그림자가 아니라 이 밝기 차이로 만든다
