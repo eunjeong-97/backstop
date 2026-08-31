@@ -6,6 +6,7 @@ import { bySeverity, days, sumHours, toPlainText, toQuote, won } from "@/lib/est
 import { HiddenTaskCard } from "./HiddenTaskCard";
 import { QuestionList } from "./QuestionList";
 import { VerdictBanner } from "./VerdictBanner";
+import { SummaryStrip } from "./SummaryStrip";
 
 export function ResultView({
   result,
@@ -13,12 +14,14 @@ export function ResultView({
   title,
   mocked,
   note,
+  clientBudget,
 }: {
   result: Stage2Result;
   dailyRate: number;
   title: string;
   mocked: boolean;
   note?: string;
+  clientBudget?: string;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -72,6 +75,13 @@ export function ResultView({
           </ul>
         </section>
       )}
+
+      <SummaryStrip
+        tasks={tasks}
+        hours={hours}
+        quote={quote}
+        clientBudget={clientBudget}
+      />
 
       <VerdictBanner verdict={result.verdict} />
 

@@ -18,6 +18,15 @@ async function post<T>(url: string, body: unknown): Promise<Envelope<T>> {
   return json as Envelope<T>;
 }
 
+/** 예시 모드에서 stage1을 못 쓸 때, 입력문에서 예산 한 줄을 찾아 그대로 보여준다. */
+function findBudgetLine(text: string): string | undefined {
+  const line = text
+    .split("\n")
+    .map((l) => l.trim().replace(/^[-·•]\s*/, ""))
+    .find((l) => /(예산|금액)/.test(l) && /원/.test(l));
+  return line ? line.replace(/^예산\s*[:：]?\s*/, "") : undefined;
+}
+
 export default function Home() {
   const [text, setText] = useState("");
   const [kind, setKind] = useState<WorkKind>("web");
@@ -29,6 +38,7 @@ export default function Home() {
   const [mocked, setMocked] = useState(false);
   const [note, setNote] = useState<string | undefined>();
   const [title, setTitle] = useState("검토한 요청문");
+  const [budget, setBudget] = useState<string | undefined>();
 
   const busy = phase === "extract" || phase === "analyze";
 
@@ -40,6 +50,9 @@ export default function Home() {
       setPhase("extract");
       const s1 = await post<Stage1Result>("/api/extract", { text });
       if (s1.data?.project?.title) setTitle(s1.data.project.title);
+      // 실제 호출이면 stage1이 뽑은 예산 표기를, 예시 모드면 입력문에서 직접 찾는다
+      const fromStage1 = s1.mocked ? "" : (s1.data?.project?.budget_text ?? "");
+      setBudget(fromStage1 || findBudgetLine(text));
 
       // 2단계: 안 적힌 것 추론
       setPhase("analyze");
@@ -104,6 +117,7 @@ export default function Home() {
             title={title}
             mocked={mocked}
             note={note}
+            clientBudget={budget}
           />
         )}
       </div>
