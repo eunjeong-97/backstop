@@ -4,7 +4,7 @@ import { callClaude, parseJson } from "@/lib/anthropic";
 import { STAGE2_PROMPT } from "@/lib/prompts.generated";
 import { clientKey, rateLimited, shouldMock, validateInput } from "@/lib/guard";
 import type { Envelope, Stage1Result, Stage2Result, WorkKind } from "@/lib/types";
-import { SAMPLES } from "@/samples";
+import { matchSample } from "@/lib/sample-match";
 import MOCK_PET from "@/mock/analyze.pet.json";
 import MOCK_FESTIVAL from "@/mock/analyze.festival.json";
 import MOCK_MALL from "@/mock/analyze.mall.json";
@@ -18,15 +18,9 @@ const MOCK_BY_SAMPLE: Record<string, unknown> = {
   mall: MOCK_MALL,
 };
 
-/**
- * 예시 모드(API 키 없음·킬스위치)에서 입력이 어느 예시인지 찾는다.
- * 예전에는 입력을 보지 않고 고정 결과 하나만 돌려줘서, 예시를 무엇을 눌러도 같은 화면이 나왔다.
- * 사용자가 직접 붙여넣은 요청문이면 못 찾고 null 을 돌려준다.
- */
+/** 입력이 어느 예시인지 찾아 그 예시의 분석 결과를 돌려준다. 못 찾으면 null. */
 function mockForInput(text: string): Stage2Result | null {
-  const norm = (s: string) => s.replace(/\s+/g, " ").trim();
-  const target = norm(text);
-  const hit = SAMPLES.find((s) => norm(s.text) === target);
+  const hit = matchSample(text);
   if (!hit) return null;
   return (MOCK_BY_SAMPLE[hit.id] as Stage2Result | undefined) ?? null;
 }

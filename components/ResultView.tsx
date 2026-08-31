@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Stage2Result } from "@/lib/types";
-import { bySeverity, days, sumHours, toPlainText, toQuote, won } from "@/lib/estimate";
+import { bySeverity, sumHours, toPlainText, toQuote } from "@/lib/estimate";
 import { HiddenTaskCard } from "./HiddenTaskCard";
 import { QuestionList } from "./QuestionList";
 import { VerdictBanner } from "./VerdictBanner";
@@ -77,9 +77,12 @@ export function ResultView({
       )}
 
       <SummaryStrip
+        title={title}
+        verdict={result.verdict}
         tasks={tasks}
         hours={hours}
         quote={quote}
+        dailyRate={dailyRate}
         clientBudget={clientBudget}
       />
 
@@ -99,35 +102,8 @@ export function ResultView({
         </ul>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2">
-        <div className="card">
-          <h2 className="text-sm font-medium text-sub">추가로 드는 공수</h2>
-          <p className="mt-1 text-2xl font-bold">
-            {hours.min}~{hours.max}시간
-          </p>
-          <p className="mt-1 text-sm text-sub">
-            하루 8시간 기준 {days(quote.lowDays)}~{days(quote.highDays)}
-          </p>
-          {hours.unquantified > 0 && (
-            <p className="mt-2 text-xs text-sub">
-              시간으로 환산하지 않은 항목 {hours.unquantified}건이 따로 있습니다
-              (대기 시간·계약 조항 등).
-            </p>
-          )}
-        </div>
-
-        <div className="card">
-          <h2 className="text-sm font-medium text-sub">견적 구간</h2>
-          <p className="mt-1 text-2xl font-bold">{won(quote.recommended)}</p>
-          <p className="mt-1 text-sm text-sub">
-            {won(quote.low)} ~ {won(quote.high)}
-          </p>
-          <p className="mt-2 text-xs text-sub">
-            입력하신 일당 {won(dailyRate)}에 위 공수를 곱한 값입니다. 이 도구는 금액을
-            만들지 않고 공수만 추정합니다.
-          </p>
-        </div>
-      </section>
+      {/* 공수·견적은 계기판(SummaryStrip) 안으로 올렸다.
+          목록을 다 지나야 금액이 보이면 "30초 안에 판단"이 안 된다. */}
 
       <section>
         <h2 className="mb-3 text-lg font-bold">계약 전에 물어봐야 할 것</h2>

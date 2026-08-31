@@ -4,13 +4,17 @@ import { callClaude, parseJson } from "@/lib/anthropic";
 import { STAGE1_PROMPT } from "@/lib/prompts.generated";
 import { clientKey, rateLimited, shouldMock, validateInput } from "@/lib/guard";
 import type { Envelope, Stage1Result } from "@/lib/types";
+import { matchSample } from "@/lib/sample-match";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
-const MOCK_STAGE1: Stage1Result = {
+/** 예시 모드에서 쓰는 뼈대. 제목은 어느 예시인지에 따라 채운다. */
+function mockStage1(text: string): Stage1Result {
+  const sample = matchSample(text);
+  return {
   project: {
-    title: "예시 요청문",
+    title: sample?.label ?? "붙여넣은 요청문",
     budget_text: "예시 데이터입니다",
     period_text: "예시 데이터입니다",
     deadline_fixed: false,
@@ -24,7 +28,8 @@ const MOCK_STAGE1: Stage1Result = {
     prepared: [],
     preparing: [],
   },
-};
+  };
+}
 
 export async function POST(request: Request) {
   let body: { text?: string };
@@ -39,7 +44,7 @@ export async function POST(request: Request) {
 
   const { mock, note } = shouldMock();
   if (mock) {
-    const res: Envelope<Stage1Result> = { data: MOCK_STAGE1, mocked: true, note };
+    const res: Envelope<Stage1Result> = { data: mockStage1(body.text ?? ""), mocked: true, note };
     return NextResponse.json(res);
   }
 
