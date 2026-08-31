@@ -1,5 +1,5 @@
 import type { HiddenTask, Stage2Result } from "@/lib/types";
-import { days, won, type HoursSummary, type Quote } from "@/lib/estimate";
+import { days, hours as fmtHours, won, type HoursSummary, type Quote } from "@/lib/estimate";
 import { verdictTone } from "./VerdictBanner";
 
 /**
@@ -75,8 +75,8 @@ export function SummaryStrip({
             {won(quote.low)} ~ {won(quote.high)}
           </p>
           <p className="num mt-2 text-xs text-accent/80">
-            권장 {won(quote.recommended)} · 추가 공수 {hours.min}~{hours.max}시간 (
-            {days(quote.lowDays)}~{days(quote.highDays)})
+            권장 {won(quote.recommended)} · 추가 공수 {fmtHours(hours.min)}~
+            {fmtHours(hours.max)}시간 ({days(quote.lowDays)}~{days(quote.highDays)})
           </p>
         </div>
       </div>

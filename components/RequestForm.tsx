@@ -99,15 +99,18 @@ export function RequestForm({
           <label htmlFor="rate" className="label">
             내 일당 (원)
           </label>
+          {/* 금액은 천 단위로 끊어 보여준다. type="number" 는 쉼표를 넣을 수 없어
+              텍스트로 두고 숫자만 걸러낸다. inputMode 로 모바일 숫자 키패드는 유지한다. */}
           <input
             id="rate"
-            type="number"
-            min={0}
-            step={10000}
-            value={rate}
+            type="text"
+            inputMode="numeric"
+            autoComplete="off"
+            placeholder="400,000"
+            value={rate ? rate.toLocaleString("ko-KR") : ""}
             disabled={busy}
-            onChange={(e) => setRate(Number(e.target.value) || 0)}
-            className="num min-h-11 w-full rounded-[3px] border border-line bg-card px-4 py-2.5 text-base outline-none focus:border-accent/60 disabled:opacity-60 sm:text-sm"
+            onChange={(e) => setRate(Number(e.target.value.replace(/\D/g, "")) || 0)}
+            className="num min-h-11 w-full rounded-[3px] border border-line bg-card px-4 py-2.5 text-base outline-none placeholder:text-mute focus:border-accent/60 disabled:opacity-60 sm:text-sm"
           />
           <p className="mt-1 text-xs text-sub">견적 환산에만 씁니다. 공수 추정에는 영향이 없습니다.</p>
         </div>

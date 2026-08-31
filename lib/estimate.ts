@@ -59,6 +59,11 @@ export function days(n: number): string {
   return `${n.toFixed(1)}일`;
 }
 
+/** 시간 수. 큰 프로젝트는 네 자리가 되므로 천 단위로 끊는다. */
+export function hours(n: number): string {
+  return n.toLocaleString("ko-KR");
+}
+
 const ORDER: Record<Severity, number> = { high: 0, medium: 1, low: 2 };
 
 export function bySeverity(a: HiddenTask, b: HiddenTask): number {
@@ -93,7 +98,10 @@ export function toPlainText(opts: {
     L.push(`   - 계약상: ${t.contract_conflict}${t.conflict_note ? ` — ${t.conflict_note}` : ""}`);
   });
   L.push("");
-  L.push("■ 공수 합계", `  ${opts.hours.min}~${opts.hours.max}시간 (${days(opts.quote.lowDays)}~${days(opts.quote.highDays)})`);
+  L.push(
+    "■ 공수 합계",
+    `  ${hours(opts.hours.min)}~${hours(opts.hours.max)}시간 (${days(opts.quote.lowDays)}~${days(opts.quote.highDays)})`
+  );
   if (opts.hours.unquantified) {
     L.push(`  · 시간으로 환산하지 않은 항목 ${opts.hours.unquantified}건 별도`);
   }
