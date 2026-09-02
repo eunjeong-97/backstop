@@ -26,6 +26,29 @@ export function rateLimited(key: string): boolean {
   return false;
 }
 
+/**
+ * 하루 전체 실호출 상한 — IP 제한이 새어도(다중 IP 공격 등) 총량은 여기서 막는다.
+ * 인스턴스 단위 best-effort. 최종 방어선은 콘솔의 선불 크레딧 잔액이다.
+ * 1건당 실측 비용 ~$0.20(2026-09-02), 분석 1건 = 호출 2회 → 60회 ≈ 분석 30건 ≈ $6/일.
+ */
+const DAY_MS = 24 * 60 * 60 * 1000;
+const MAX_CALLS_PER_DAY = 60;
+let dayStart = Date.now();
+let dayCalls = 0;
+
+export function dailyBudgetExceeded(): boolean {
+  if (Date.now() - dayStart > DAY_MS) {
+    dayStart = Date.now();
+    dayCalls = 0;
+  }
+  return dayCalls >= MAX_CALLS_PER_DAY;
+}
+
+/** 실제 API 호출 직전에 1회씩 센다. mock 응답은 세지 않는다. */
+export function countRealCall(): void {
+  dayCalls += 1;
+}
+
 export function killSwitchOn(): boolean {
   return process.env.BACKSTOP_DISABLED === "1";
 }
@@ -41,6 +64,8 @@ export function hasApiKey(): boolean {
 export function shouldMock(): { mock: boolean; note?: string } {
   if (killSwitchOn()) return { mock: true, note: "일시적으로 예시 결과만 제공하고 있습니다." };
   if (!hasApiKey()) return { mock: true, note: "예시 결과입니다. 실제 분석은 준비 중입니다." };
+  if (dailyBudgetExceeded())
+    return { mock: true, note: "오늘 준비된 분석 횟수를 모두 사용했습니다. 예시 결과를 보여드립니다." };
   return { mock: false };
 }
 

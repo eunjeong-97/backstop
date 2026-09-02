@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { callClaude, parseJson } from "@/lib/anthropic";
 import { STAGE2_PROMPT } from "@/lib/prompts.generated";
-import { clientKey, rateLimited, shouldMock, validateInput } from "@/lib/guard";
+import { clientKey, countRealCall, rateLimited, shouldMock, validateInput } from "@/lib/guard";
 import type { Envelope, Stage1Result, Stage2Result, WorkKind } from "@/lib/types";
 import { matchSample } from "@/lib/sample-match";
 import MOCK_PET from "@/mock/analyze.pet.json";
@@ -77,6 +77,7 @@ export async function POST(request: Request) {
   ].join("\n");
 
   try {
+    countRealCall();
     const raw = await callClaude(STAGE2_PROMPT, user);
     const data = parseJson<Stage2Result>(raw);
     const res: Envelope<Stage2Result> = { data, mocked: false };
