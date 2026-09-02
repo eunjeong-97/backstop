@@ -93,7 +93,7 @@ export function SummaryStrip({
 
       <p className="text-xs leading-relaxed text-mute">
         견적은 입력하신 일당 {won(dailyRate)}에 공수를 곱한 값입니다. 이 도구는 금액을 만들지
-        않고 공수만 추정합니다.
+        않고 공수만 추정합니다. 공수는 추정 범위이니 계약 전에 직접 조정하세요.
         {hours.unquantified > 0 &&
           ` 시간으로 환산하지 않은 항목 ${hours.unquantified}건(대기 시간·계약 조항 등)은 위 금액에 들어 있지 않습니다.`}
       </p>
