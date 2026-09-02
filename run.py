@@ -25,7 +25,7 @@ def call(system, user, max_tokens=16000):  # 8000이었을 때 stage2 출력이 
         "https://api.anthropic.com/v1/messages", data=body,
         headers={"content-type": "application/json", "x-api-key": KEY,
                  "anthropic-version": "2023-06-01"})
-    with urllib.request.urlopen(req, timeout=300) as r:
+    with urllib.request.urlopen(req, timeout=600) as r:  # stage2 실측 최장 266초 — 300은 빠듯해 타임아웃 발생(2026-09-02)
         d = json.loads(r.read())
     return "".join(b.get("text", "") for b in d.get("content", []))
 
