@@ -1,7 +1,8 @@
 // 비용·안전 가드. API 키가 공개 링크 뒤에 있으므로 여기를 통과하지 않으면 호출하지 않는다.
 
 export const MAX_INPUT_CHARS = 6000;
-export const MAX_OUTPUT_TOKENS = 8000;
+// 8000이었을 때 Stage 2 출력이 상한에서 잘려 JSON 파싱이 깨졌다 (2026-09-02 실측: output=8000 == 상한)
+export const MAX_OUTPUT_TOKENS = 16000;
 
 /** 서버리스 인스턴스 단위의 best-effort 제한. 완벽하지 않음을 README에 명시했다. */
 const WINDOW_MS = 60 * 60 * 1000;
