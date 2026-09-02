@@ -2,7 +2,14 @@
 import { NextResponse } from "next/server";
 import { callClaude, parseJson } from "@/lib/anthropic";
 import { STAGE2_PROMPT } from "@/lib/prompts.generated";
-import { clientKey, countRealCall, rateLimited, shouldMock, validateInput } from "@/lib/guard";
+import {
+  clientKey,
+  countRealCall,
+  isCreditExhausted,
+  rateLimited,
+  shouldMock,
+  validateInput,
+} from "@/lib/guard";
 import type { Envelope, Stage1Result, Stage2Result, WorkKind } from "@/lib/types";
 import { matchSample } from "@/lib/sample-match";
 import MOCK_PET from "@/mock/analyze.pet.json";
@@ -83,6 +90,17 @@ export async function POST(request: Request) {
     const res: Envelope<Stage2Result> = { data, mocked: false };
     return NextResponse.json(res);
   } catch (e) {
+    // 잔액 소진은 에러 화면 대신 예시 모드로 — 링크가 항상 무언가를 보여준다
+    if (isCreditExhausted(e)) {
+      const matched = mockForInput(body.text ?? "");
+      const note = "일시적으로 예시 결과만 제공하고 있습니다.";
+      const res: Envelope<Stage2Result> = {
+        data: (matched ?? (MOCK_PET as unknown as Stage2Result)) as Stage2Result,
+        mocked: true,
+        note: matched ? note : `${note} 아래는 붙여넣으신 요청문이 아니라 준비된 예시 사례의 결과입니다.`,
+      };
+      return NextResponse.json(res);
+    }
     const msg = e instanceof Error ? e.message : "알 수 없는 오류";
     return NextResponse.json({ error: `분석에 실패했습니다. ${msg}` }, { status: 502 });
   }

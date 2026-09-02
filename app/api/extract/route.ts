@@ -2,7 +2,14 @@
 import { NextResponse } from "next/server";
 import { callClaude, parseJson } from "@/lib/anthropic";
 import { STAGE1_PROMPT } from "@/lib/prompts.generated";
-import { clientKey, countRealCall, rateLimited, shouldMock, validateInput } from "@/lib/guard";
+import {
+  clientKey,
+  countRealCall,
+  isCreditExhausted,
+  rateLimited,
+  shouldMock,
+  validateInput,
+} from "@/lib/guard";
 import type { Envelope, Stage1Result } from "@/lib/types";
 import { matchSample } from "@/lib/sample-match";
 
@@ -62,6 +69,15 @@ export async function POST(request: Request) {
     const res: Envelope<Stage1Result> = { data, mocked: false };
     return NextResponse.json(res);
   } catch (e) {
+    // 잔액 소진은 에러 화면 대신 예시 모드로 — 링크가 항상 무언가를 보여준다
+    if (isCreditExhausted(e)) {
+      const res: Envelope<Stage1Result> = {
+        data: mockStage1(body.text ?? ""),
+        mocked: true,
+        note: "일시적으로 예시 결과만 제공하고 있습니다.",
+      };
+      return NextResponse.json(res);
+    }
     const msg = e instanceof Error ? e.message : "알 수 없는 오류";
     return NextResponse.json({ error: `분석에 실패했습니다. ${msg}` }, { status: 502 });
   }

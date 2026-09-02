@@ -69,6 +69,15 @@ export function shouldMock(): { mock: boolean; note?: string } {
   return { mock: false };
 }
 
+/**
+ * API 오류 중 "잔액 소진"만 골라낸다. 이 경우는 에러 화면 대신 예시 모드로 넘긴다 —
+ * 심사 기간 중 크레딧이 바닥나도 링크가 에러가 아니라 예시를 보여주도록.
+ * (2026-09-02 실발생: 400 "Your credit balance is too low to access the Anthropic API")
+ */
+export function isCreditExhausted(e: unknown): boolean {
+  return e instanceof Error && e.message.includes("credit balance is too low");
+}
+
 export function validateInput(text: unknown): string | null {
   if (typeof text !== "string" || text.trim().length === 0) {
     return "요청문을 입력해 주세요.";
