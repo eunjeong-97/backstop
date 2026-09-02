@@ -4,6 +4,7 @@ import { useState } from "react";
 import { RequestForm } from "@/components/RequestForm";
 import { ProgressSteps, type Phase } from "@/components/ProgressSteps";
 import { ResultView } from "@/components/ResultView";
+import { Stage1Preview } from "@/components/Stage1Preview";
 import { DEFAULT_DAILY_RATE } from "@/lib/estimate";
 import type { Envelope, Stage1Result, Stage2Result, WorkKind } from "@/lib/types";
 
@@ -44,17 +45,22 @@ export default function Home() {
   const [note, setNote] = useState<string | undefined>();
   const [title, setTitle] = useState("검토한 요청문");
   const [budget, setBudget] = useState<string | undefined>();
+  const [stage1, setStage1] = useState<Stage1Result | null>(null);
 
   const busy = phase === "extract" || phase === "analyze";
 
   async function run() {
     setError(null);
     setResult(null);
+    setStage1(null);
     try {
       // 1단계: 적힌 것만 구조화
       setPhase("extract");
       const s1 = await post<Stage1Result>("/api/extract", { text });
       if (s1.data?.project?.title) setTitle(s1.data.project.title);
+      // 2단계를 기다리는 동안 읽을 수 있게 stage1 결과를 먼저 보여준다.
+      // 예시 모드는 stage1이 껍데기라 보여줄 것이 없다.
+      if (!s1.mocked && (s1.data?.explicit_tasks?.length ?? 0) > 0) setStage1(s1.data);
       // 실제 호출이면 stage1이 뽑은 예산 표기를, 예시 모드면 입력문에서 직접 찾는다
       const fromStage1 = s1.mocked ? "" : (s1.data?.project?.budget_text ?? "");
       setBudget(fromStage1 || findBudgetLine(text));
@@ -119,6 +125,8 @@ export default function Home() {
 
       <div className="mt-6 space-y-6">
         <ProgressSteps phase={phase} />
+
+        {stage1 && phase === "analyze" && <Stage1Preview stage1={stage1} />}
 
         {error && (
           <div className="rounded-xl border border-high/30 bg-high/5 p-4 text-sm text-high">
