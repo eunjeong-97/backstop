@@ -13,7 +13,7 @@ ROOT = pathlib.Path(__file__).parent
 MODEL = os.environ.get("BACKSTOP_MODEL", "claude-sonnet-5")
 KEY = os.environ.get("ANTHROPIC_API_KEY")
 
-def call(system, user, max_tokens=8000):
+def call(system, user, max_tokens=16000):  # 8000이었을 때 stage2 출력이 잘려 파싱 실패 (2026-09-02 실측)
     if not KEY:
         sys.exit("ANTHROPIC_API_KEY 가 없습니다. export ANTHROPIC_API_KEY=... 후 다시 실행하세요.")
     body = json.dumps({
