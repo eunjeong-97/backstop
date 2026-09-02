@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type Phase = "idle" | "extract" | "analyze" | "done" | "error";
 
@@ -10,6 +10,14 @@ const STEPS: { key: Phase; label: string }[] = [
 ];
 
 const ORDER: Phase[] = ["idle", "extract", "analyze", "done"];
+
+/**
+ * 예상 소요. 실제 남은 시간은 알 수 없으므로 경과 시간 기준 추정이며,
+ * 다 찼다고 오해하지 않도록 95%에서 멈춰 기다린다.
+ */
+const EXPECTED_MS = 50_000;
+/** 이보다 길어지면 안내 문구를 바꾼다 */
+const SLOW_MS = 75_000;
 
 /** 30~60초는 긴 시간이다. 지금 무엇을 보고 있는지 알려주면 이탈이 줄어든다. */
 const HINTS: Record<"extract" | "analyze", string[]> = {
@@ -29,19 +37,37 @@ const HINTS: Record<"extract" | "analyze", string[]> = {
 };
 
 export function ProgressSteps({ phase }: { phase: Phase }) {
-  const [tick, setTick] = useState(0);
+  const [elapsed, setElapsed] = useState(0);
+  const startedAt = useRef<number | null>(null);
+  const running = phase === "extract" || phase === "analyze";
 
   useEffect(() => {
-    if (phase !== "extract" && phase !== "analyze") return;
-    setTick(0);
-    const id = setInterval(() => setTick((v) => v + 1), 3500);
+    if (!running) {
+      startedAt.current = null;
+      setElapsed(0);
+      return;
+    }
+    // 단계가 바뀌어도 타이머는 이어간다 — 사용자가 보는 건 전체 대기 시간이다
+    if (startedAt.current === null) startedAt.current = Date.now();
+    const id = setInterval(() => {
+      if (startedAt.current !== null) setElapsed(Date.now() - startedAt.current);
+    }, 250);
     return () => clearInterval(id);
-  }, [phase]);
+  }, [running]);
 
   if (phase === "idle" || phase === "error") return null;
   const now = ORDER.indexOf(phase);
-  const active = phase === "extract" || phase === "analyze" ? phase : null;
-  const hint = active ? HINTS[active][tick % HINTS[active].length] : null;
+  const seconds = Math.floor(elapsed / 1000);
+  const slow = elapsed > SLOW_MS;
+
+  let percent = Math.min(95, (elapsed / EXPECTED_MS) * 100);
+  if (phase === "analyze") percent = Math.max(percent, 50);
+  if (phase === "done") percent = 100;
+
+  const active = running ? (phase as "extract" | "analyze") : null;
+  const hint = active
+    ? HINTS[active][Math.floor(elapsed / 3500) % HINTS[active].length]
+    : null;
 
   return (
     <div className="card space-y-3">
@@ -67,14 +93,30 @@ export function ProgressSteps({ phase }: { phase: Phase }) {
             </div>
           );
         })}
-        <span className="text-xs text-sub sm:ml-auto">보통 30초~1분 걸립니다</span>
       </div>
 
-      {hint && (
+      <div
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(percent)}
+        aria-label="분석 진행률"
+        className="h-1 w-full overflow-hidden rounded-[2px] bg-line"
+      >
+        <div
+          className="h-full bg-accent transition-[width] duration-300 ease-out"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <p aria-live="polite" className="text-sm text-sub">
-          {hint}
+          {slow ? "예상보다 오래 걸리고 있습니다. 조금만 더 기다려 주세요" : hint}
         </p>
-      )}
+        <span className="num shrink-0 text-xs text-mute">
+          {seconds}초 경과 · 보통 30~60초
+        </span>
+      </div>
     </div>
   );
 }

@@ -24,3 +24,4 @@ golden/요청문목록.txt
 .DS_Store
 .vercel
 venv/
+.env*
